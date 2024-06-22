@@ -1,0 +1,41 @@
+Who is your end user?
+
+Our Car buy and Sell management application is being developed for users who can post their ads for vehicle resale. This system overcomes the problem of searching for a second hand vehicle. People usually go to garages and showrooms in search for their desired second hand vehicle that they wish to buy that becomes tedious at a point and even consumes lot of time. Hence the project helps users to get their desired vehicle details online at a single place.
+Users can view and browse through categories and request for their desired vehicle by selecting the vehicle. The request is sent to admin who then contacts and informs the respective seller for the request made. The system provides an additional feature of vehicle insurance for users to avail it.
+
+
+Objective:
+
+To streamline the process of buying and selling used cars by offering a user-friendly platform that connects sellers with potential buyers, provides accurate vehicle information and history, facilitates secure transactions, and enhances overall customer experience, ultimately creating a trusted and efficient marketplace for pre-owned vehicles.
+
+
+Scope:
+
+The scope of a second-hand car buy and sell management application can be comprehensive, covering various aspects of the used car market. Here are some key areas it could encompass:
+
+User Profiles: Allow users to create accounts with profiles detailing their preferences, contact information, and transaction history.
+Vehicle Listings: Provide a platform for sellers to list their used cars with detailed descriptions, photos, and specifications.
+Search and Filter: Implement robust search and filter functionalities to help buyers find specific vehicles based on make, model, price range, mileage, location, etc. 
+
+Transactions: Facilitate secure payment options for buyers.Provide a secure platform for managing transactions and agreements.
+
+Documentation Assistance: Offer guidance and assistance with paperwork, including transfer of ownership, vehicle history reports, and legal documentation.
+
+Feedback and Reviews: Allow users to leave feedback and reviews, enhancing transparency and trust within the platform.
+
+By covering these aspects, the application can offer a comprehensive solution for both buyers and sellers in the second-hand car market, facilitating smooth transactions and enhancing trust and transparency.
+
+Advantages:
+
+It saves user time that is wasted in search of required second hand vehicles.
+User can find the various vehicles information along with images at a single place.
+This system is effective and saves time, efforts and cost of users.
+Sellers can also easily find a buyer for their vehicle easily by posting ads.
+Easy registration.
+
+
+Limitations:
+
+The user cannot view the vehicle in person.
+No human interaction.
+If poor quality photographs are uploaded, system proves inefficient..

@@ -1,0 +1,245 @@
+#Model specific
+transmission - automatic/manual (boolean/char)
+gearbox - 6 speed (int)
+rear brake type- disc/drum (boolean/char)
+front brake type - disc/drum (boolean/char)
+top speed int
+tyre type - tube/tubeless (boolean/char)
+cargo volume int
+seating capacity int
+engine displacement cc int
+max power hp int
+max torque nm int
+no of cylinders int
+fuel type - petrol/diesel/CNG/LPG/Electric char
+length int
+width int
+height int
+wheel base int
+gross weight int
+
+power steering - y/n boolean
+Power Windows - y/n boolean
+Air Conditioner - y/n boolean
+Adjustable Head Lights - y/n boolean
+Fog Lights Front - y/n boolean
+Anti Lock Braking System - y/n boolean
+Brake Assist - y/n boolean
+Radio,Bluetooth,USB - y/n boolean
+Speakers - y/n boolean
+Adjustable Seats - y/n boolean
+Cruise Control - y/n boolean
+Navigation System - y/n boolean
+Power Adjustable Mirror- y/n boolean
+Sun Roof- y/n boolean
+Air Bag- y/n boolean
+Seat Belt- y/n boolean
+Centeral Locking- y/n boolean
+
+
+
+#Car specific
+car no char
+car company char
+car name char
+car condition - good/bad (boolean/char)
+car status- available/not available (boolean/char)
+car owner id (fk)
+insurance - available/not available (boolean/char)
+rto - place char
+ownership - no. of prev.owners int
+Mfg year- date
+kms driven int
+milage int
+color char
+
+-------------------------------------------------------------------------------------------------------------
+
+## use carbazaar;
+
+## Table: users
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY auto_increment,
+    user_name VARCHAR(40),
+    user_email VARCHAR(50),
+    user_mobile_no VARCHAR(15),
+    user_address VARCHAR(100),
+    isAdmin BOOLEAN
+);
+
+
+
+## Table: logins
+
+CREATE TABLE logins (
+    login_id INT PRIMARY KEY,
+    username VARCHAR(40),
+    password VARCHAR(100),
+    timestamp DATETIME,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+## Table: cars
+
+CREATE TABLE cars (
+    car_id INT PRIMARY KEY,
+    car_number VARCHAR(25),
+    isInsurance BOOLEAN,
+    rto_location VARCHAR(20),
+    car_ownership VARCHAR(20),
+    car_mfg_year INT,
+    kms_driven INT,
+    car_milage INT,
+    car_color VARCHAR(10),
+    car_condition VARCHAR(10),
+    car_status BOOLEAN,
+    isDeleted_car BOOLEAN,
+    car_model_id INT,
+    model_specification_id INT,
+    user_id INT,
+    car_selling_price INT,	
+    FOREIGN KEY (car_model_id) REFERENCES car_models(car_model_id),
+    FOREIGN KEY (model_specification_id) REFERENCES model_specifications(model_specification_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+
+## Table: car_models
+
+CREATE TABLE car_models (
+    car_model_id INT PRIMARY KEY,
+    car_model_company VARCHAR(30),
+    model_name VARCHAR(30),
+    transmission VARCHAR(10),
+    gearbox INT,
+    front_brake_type VARCHAR(10),
+    rear_brake_type VARCHAR(10),
+    top_speed INT,
+    tyre_type VARCHAR(10),
+    cargo_volume INT,
+    seating_capacity INT,
+    engine_displacement INT,
+    max_power INT,
+    max_torque INT,
+    no_of_cylinders INT,
+    fuel_type VARCHAR(20),
+    length INT,
+    width INT,
+    height INT,
+    wheel_base INT,
+    gross_weight INT,
+    car_model_type VARCHAR(20),
+    car_series_name VARCHAR(20),
+);
+
+
+## Table: model_specifications
+
+CREATE TABLE model_specifications (
+    model_specification_id INT PRIMARY KEY,
+    isPower_steering BOOLEAN,
+    isPower_windows BOOLEAN,
+    isAir_conditioner BOOLEAN,
+    isAdjustable_head_lights BOOLEAN,
+    isFog_lights BOOLEAN,
+    isABS BOOLEAN,
+    isBrake_assist BOOLEAN,
+    isMusic_system BOOLEAN,
+    isSpeakers BOOLEAN,
+    isAdjustable_seats BOOLEAN,
+    isCruise_control BOOLEAN,
+    isNavigation_system BOOLEAN,
+    isPower_adjustable_mirrors BOOLEAN,
+    isSunroof BOOLEAN,
+    isAir_bags BOOLEAN,
+    isSeat_belt BOOLEAN,
+    isCentral_locking BOOLEAN
+);
+
+
+## Table: reviews
+
+CREATE TABLE reviews (
+    review_id INT PRIMARY KEY,
+    rating INT,
+    review_text VARCHAR(200),
+    review_timestamp DATETIME,
+    car_id INT,
+    user_id INT,
+    FOREIGN KEY (car_id) REFERENCES cars(car_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+## Table: images
+
+CREATE TABLE images (
+    image_id INT PRIMARY KEY,
+    car_id INT,
+    image_url VARCHAR(100),
+    FOREIGN KEY (car_id) REFERENCES cars(car_id)
+);
+
+
+## Table: transactions
+
+CREATE TABLE transactions (
+    transaction_id INT PRIMARY KEY,
+    user_id INT,
+    car_id INT,
+    transaction_date DATETIME,
+    transaction_amount INT,
+    transaction_type VARCHAR(20),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (car_id) REFERENCES cars(car_id)
+);
+
+
+-------------------------------------------------------------------------------------------------------------
+
+
+### Work flow diagram
+Mermaid.com
+
+graph TD;
+    A[Start] --> B(User Registration/Login)
+    B --> C(Sell a Car)
+    B --> D(Buy a Car)
+    C --> E(Fill out Car Details)
+    E --> F(Upload Car Images)
+    F --> G(Set Sale Price)
+    G --> H(Publish Listing)
+    H --> I(Manage Listings)
+    I --> J(Add into Listings)
+    I --> K(Edit Listing)
+    I --> L(Remove Listing)
+    J --> T(Finalize Sale)
+    K --> T(Finalize Sale)
+    L --> T(Finalize Sale)
+    T --> U(End)
+    D --> M(Compare cars)
+    M -->O
+    D --> N(Search for Cars)
+    N --> O(Select a Car)
+    O --> P(View Car Details)
+    P --> Q(Add to Cart/wishlist)
+    Q --> R(Book a car)
+    R --> S(Give Review)
+    S --> U(End)
+    B --> V(Admin login)
+    V --> W(Registration authentication)
+    W --> X(Car management)
+    X --> Y(Review management)
+    Y --> Z(Transaction management)
+    Z --> U(End)
+
+
+-------------------------------------------------------------------------------------------------------------
+
+
+
+
