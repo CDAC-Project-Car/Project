@@ -1,0 +1,6 @@
+naming convention 
+standard follow
+ignore files
+branching names
+git commit -a -m "msg" // skiping staging
+
