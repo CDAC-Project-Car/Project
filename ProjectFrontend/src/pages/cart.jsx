@@ -15,7 +15,9 @@ export default function Cart()
         <div className="col-8"  >
 
            <center>
-           <table className="table table-striped mb-5">
+          <div className="table-responsive">
+
+          <table className="table table-striped mb-5 ">
                 <thead>
                     <th>Sr No.</th>
                     <th>Car Name</th>
@@ -69,6 +71,8 @@ export default function Cart()
 
                 </tbody>
             </table>
+
+          </div>
            </center>
 
         </div>

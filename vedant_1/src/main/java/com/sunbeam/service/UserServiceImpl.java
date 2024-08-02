@@ -28,4 +28,13 @@ public class UserServiceImpl implements UserService {
 		return ud.save(user);
 	}
 
+	@Override
+	public User signIn(User u) {
+
+		User user = ud.findByEmailAndPassword(u.getEmail(), u.getPassword()).orElseThrow(()-> new ApiException("vehicle not found"));
+		
+		return user;
+
+	}
+
 }
