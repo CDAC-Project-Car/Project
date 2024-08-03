@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-    <typeInfo handle="=spring_boot_backend_template/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.sunbeam.service{CarService.java[CarService" modifiers="513" timestamp="1722641263180"/>
-    <typeInfo handle="=spring_boot_backend_template/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.sunbeam.service{CarModelService.java[CarModelService" modifiers="513" timestamp="1722641924520"/>
-    <typeInfo handle="=spring_boot_backend_template/C:\/Program Files\/Java\/jdk-11\/lib\/jrt-fs.jar`java.desktop=/maven.pomderived=/true=/=/javadoc_location=/https:\/\/docs.oracle.com\/en\/java\/javase\/11\/docs\/api\/=/&lt;javax.swing.text(Caret.class[Caret" modifiers="1537" timestamp="1713693106256"/>
-    <typeInfo handle="=spring_boot_backend_template/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.sunbeam.dao{CarDao.java[CarDao" modifiers="513" timestamp="1722641795103"/>
-</typeInfoHistroy>
