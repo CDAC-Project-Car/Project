@@ -1,0 +1,18 @@
+package com.sunbeam.service;
+
+import java.util.List;
+import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
+import com.sunbeam.entities.CarModel;
+
+@Service
+@Transactional
+public class CarModelServiceImpl implements CarModelService {
+
+	@Override
+	public List<CarModel> getAllCarsByCompany() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

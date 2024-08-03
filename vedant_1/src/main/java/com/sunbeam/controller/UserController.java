@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sunbeam.dto.ApiResponse;
+import com.sunbeam.dto.UserRequestDTO;
 import com.sunbeam.entities.User;
 import com.sunbeam.service.UserService;
 
@@ -19,28 +18,25 @@ import com.sunbeam.service.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService us;
+	private UserService userService;
 
-	@PostMapping("/addUser")
-	public ResponseEntity<?> addNewUser(@RequestBody User user) {
+	@PostMapping("/registerUser")
+	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(us.addNewUser(user));
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(e.getMessage()));
+			return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(user));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
 	
 
-	
-
 	@PostMapping("/login")
-	public ResponseEntity<?> signIn(@RequestBody User u) {
-		try {
-
-			return ResponseEntity.ok(us.signIn(u));
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("invalid"));
-		}
+	public ResponseEntity<?> signIn(@RequestBody UserRequestDTO user) {
+			try {
+				return ResponseEntity.ok(userService.signIn(user.getEmail(), user.getPassword()));
+			}catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			}
 	}
 
 }

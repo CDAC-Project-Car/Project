@@ -1,0 +1,42 @@
+//package com.sunbeam.entities;
+//
+//import javax.persistence.Entity;
+//import javax.persistence.Table;
+//import javax.validation.constraints.NotBlank;
+//
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
+//import lombok.ToString;
+//
+//@Entity
+//@Table(name="cars")
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Getter
+//@Setter
+//@ToString
+//public class Car extends BaseEntity{
+//	
+//	@
+//    car_id INT PRIMARY KEY auto_increment,
+//    car_number VARCHAR(25),
+//    isInsurance BOOLEAN,
+//    rto_location VARCHAR(20),
+//    car_ownership VARCHAR(20),
+//    car_mfg_year INT,
+//    kms_driven INT,
+//    car_milage INT,
+//    car_color VARCHAR(10),
+//    car_status BOOLEAN,
+//    isDeleted_car BOOLEAN,
+//    car_model_id INT,
+//    model_specification_id INT,
+//    user_id INT,
+//    car_selling_price INT,	
+//    FOREIGN KEY (car_model_id) REFERENCES car_models(car_model_id),
+//    FOREIGN KEY (model_specification_id) REFERENCES model_specifications(model_specification_id),
+//    FOREIGN KEY (user_id) REFERENCES users(user_id)
+//
+//}

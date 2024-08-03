@@ -1,0 +1,11 @@
+package com.sunbeam.service;
+
+import com.sunbeam.custom_exception.ApiResponseException;
+import com.sunbeam.dto.ApiResponse;
+import com.sunbeam.entities.User;
+
+public interface UserService {
+
+	ApiResponse addNewUser(User user);
+//	User signIn(User u);
+}
