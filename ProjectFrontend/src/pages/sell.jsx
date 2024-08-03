@@ -4,42 +4,19 @@ import { useState } from "react";
 
 export default function Sell() {
 
-  // dummy data
-
-  const brands1 = [
-    { carBrand: "Toyota" },
-    { carBrand: "Honda" },
-    { carBrand: "Ford" },
-  ];
-
-  const models1 = [
-    { carModel: "Corolla" },
-    { carModel: "Camry" },
-    { carModel: "RAV4" },
-    { carModel: "Civic" },
-    { carModel: "Accord" },
-    { carModel: "CR-V" },
-    { carModel: "Fiesta" },
-    { carModel: "Focus" },
-    { carModel: "Mustang" },
-  ];
-
-  const variants1 = [
-    { "carVariant": "LE" },
-    { "carVariant": "SE" },
-    { "carVariant": "XLE" },
-    { "carVariant": "LX" },
-    { "carVariant": "EX" },
-    { "carVariant": "Sport" },
-    { "carVariant": "S" },
-    { "carVariant": "SE" },
-    { "carVariant": "ST" }
-  ]
-  //  ----------------------------------------------------------------------------------------
+  
 
   // for select-options
 
-  const [brands , setBrands]=
+  const [brands , setBrands]=useState([])
+  const [models , setModels ]=useState([])
+  const [variants , setVariants]=useState([])
+
+  const [selectedBrand , setSelectedBrand]= useState(null)
+  const [selectedModel , setSelectedModel]= useState(null)
+
+  
+
 
 
 
