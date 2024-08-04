@@ -1,27 +1,55 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { getBrandFData, getModelData, getVariantData } from "../services/car";
+import { useEffect, useState } from "react";
+import { Select } from "../components/Select";
 
 export default function Sell() {
-
-  
-
   // for select-options
 
-  const [brands , setBrands]=useState([])
-  const [models , setModels ]=useState([])
-  const [variants , setVariants]=useState([])
+  const [brands, setBrands] = useState([]);
+  const [models, setModels] = useState([]);
+  const [variants, setVariants] = useState([]);
 
-  const [selectedBrand , setSelectedBrand]= useState(null)
-  const [selectedModel , setSelectedModel]= useState(null)
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedVariant, setSelectedVariant] = useState(null);
 
-  
+  useEffect(() => {
+    const fetchBrand = async () => {
+      const data = await getBrandFData();
+      setBrands(data);
+    };
+    fetchBrand();
+  }, []);
 
+  useEffect(() => {
+    const fetchModels = async () => {
+      if (selectedBrand) {
+        const data = await getModelData(selectedBrand);
+        setModels(data);
+      } else {
+        setVariants([]);
+        setModels([]);
+        setSelectedModel(null);
+      }
+    };
 
+    fetchModels();
+  }, [selectedBrand]);
 
-
-
-
+  useEffect(() => {
+    const fetchVariant = async () => {
+      if (selectedModel) {
+        const data = await getVariantData(selectedModel);
+        setVariants(data);
+      } else {
+        setVariants([]);
+        // setSelectedVariant(null);
+      }
+    };
+    fetchVariant();
+  }, [selectedModel]);
 
   // for booleans
   const [isInsured, setInsured] = useState(false);
@@ -43,13 +71,6 @@ export default function Sell() {
   const [isSeatBelt, setSeatBelt] = useState(false);
   const [isCentralLocking, setCentralLocking] = useState(false);
 
-
-
-
-  
-
-
-
   return (
     <div>
       <Navbar />
@@ -70,6 +91,63 @@ export default function Sell() {
               borderRadius: 10,
             }}
           >
+            <div className="row mt-3">
+              <div className="col-4">
+                <div className="mb-3">
+                  <Select
+                    id="select-brand"
+                    value={selectedBrand}
+                    onChange={(e) => {
+                      setSelectedBrand(e.target.value);
+                      setSelectedModel(null);
+                      setVariants([]);
+                      // setModels([])
+                    }}
+                    disabled={false}
+                    defaultOption="Select Car Brand"
+                    options={brands}
+                  />
+                </div>
+              </div>
+
+              <div className="col-4">
+                <div className="mb-3">
+                  <Select
+                    id="select-model"
+                    value={selectedModel}
+                    onChange={(e) => {
+                      setSelectedModel(e.target.value);
+                      // setSelectedVariant(null); // check
+                      setVariants([]);
+                      
+                    }}
+                    disabled={!selectedBrand}
+                    defaultOption="Select Car Model"
+                    options={models}
+                  />
+                </div>
+              </div>
+
+              <div className="col-4">
+                <div className="mb-3">
+                  <Select
+                    id="select-variant"
+                    value={selectedVariant}
+                    onChange={(e) => {
+                      setSelectedVariant(e.target.value);
+                      debugger;
+                      
+                    }}
+                    disabled={!selectedModel}
+                    defaultOption="Select Car Variant"
+                    options={variants}
+                  />
+                </div>
+              </div>
+
+              {/* row-1 */}
+            </div>
+
             <div className="row">
               <div className="col">
                 <div className="mb-3">
@@ -86,7 +164,7 @@ export default function Sell() {
                 </div>
               </div>
 
-              {/* row-1 */}
+              {/* row-2 */}
             </div>
 
             <div className="row">
