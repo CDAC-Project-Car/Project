@@ -50,7 +50,6 @@ export default function Sell() {
         setVariants(data);
       } else {
         setVariants([]);
-        
       }
     };
     fetchVariant();
@@ -76,18 +75,23 @@ export default function Sell() {
   const [isSeatBelt, setSeatBelt] = useState(false);
   const [isCentralLocking, setCentralLocking] = useState(false);
 
-  const onSell = ()=>{
+  const onSell = () => {
     //to do
     console.log(selectedVariant);
-
-  }
+  };
 
   return (
     <div>
       <Navbar />
       <div className="container-fluid">
-        <h3 style={{ fontWeight: "bold", color: "steelblue" }}>
-          <center>Sell Car</center>
+        <h3
+          style={{
+            fontWeight: "bold",
+            color: "steelblue",
+            textAlign: "center",
+          }}
+        >
+          Sell Car
         </h3>
         <div className="row mt-5">
           {/* col-2 */}
@@ -144,7 +148,6 @@ export default function Sell() {
                     value={selectedVariant}
                     onChange={(e) => {
                       setSelectedVariant(e.target.value);
-                       
                     }}
                     disabled={!selectedModel}
                     defaultOption="Select Car Variant"
@@ -557,7 +560,9 @@ export default function Sell() {
 
             <center>
               <div className="mb-4">
-                <button className="btn btn-success mt-3" onClick={onSell}>Sell</button>
+                <button className="btn btn-success mt-3" onClick={onSell}>
+                  Sell
+                </button>
                 <button className="btn btn-danger ms-3 mt-3">Cancel</button>
               </div>
             </center>
