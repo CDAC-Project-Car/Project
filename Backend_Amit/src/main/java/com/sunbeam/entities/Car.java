@@ -1,5 +1,6 @@
 package com.sunbeam.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -71,16 +73,16 @@ public class Car{
 	@Size(min = 0, message = "car selling price cannot be negative")
 	private Long carSellingPrice;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "car_model_id")
-//	private CarModel carModel;
+	@ManyToOne
+	@JoinColumn(name = "car_model_id_fk")
+	private CarModel carModel;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "model_specification_id")
-//	private ModelSpecification modelSpecification;
-//	
-//	@ManyToOne
-//	@JoinColumn(name = "user_id")
-//	private User user;	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "model_specification_id_fk")
+	private ModelSpecification modelSpecification;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id_fk")
+	private User user;	
 
 }

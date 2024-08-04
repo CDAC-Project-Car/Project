@@ -1,5 +1,7 @@
 package com.sunbeam.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.apache.catalina.connector.Response;
@@ -7,11 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.sunbeam.dto.CarModelDeleteRequestDTO;
+import com.sunbeam.entities.CarModel;
 import com.sunbeam.service.CarModelService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/carModel")
@@ -20,6 +30,30 @@ public class CarModelController {
 	
 	@Autowired
 	private CarModelService carModelService;
+	
+	@PostMapping("/add")
+	public ResponseEntity<?> addCarModel(@RequestBody CarModel carModel)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(carModelService.addCarModel(carModel));
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteCarModel(@RequestBody CarModelDeleteRequestDTO carModel)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(carModelService.deleteCarModel(carModel));
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	
+	
 	
 	@GetMapping("/company")
 	public ResponseEntity<?> getAllCarsByCompany()
@@ -52,16 +86,16 @@ public class CarModelController {
 		}
 	}
 	
-//	@GetMapping("/compare/{id1}/{id2}")
-//	public ResponseEntity<?> compareCars(@PathVariable @NotNull Long id1, @PathVariable @NotNull Long id2)
-//	{
-//		try {
-//			return ResponseEntity.status(HttpStatus.OK).body(carModelService.compareCars(id1,id2));
-//		}catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//		}
-//		
-//	}
+	@GetMapping("/compare/{id1}/{id2}")
+	public ResponseEntity<?> compareCars(@PathVariable @NotNull Long id1, @PathVariable @NotNull Long id2)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(carModelService.compareCars(id1,id2));
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+		
+	}
 	
 	
 }

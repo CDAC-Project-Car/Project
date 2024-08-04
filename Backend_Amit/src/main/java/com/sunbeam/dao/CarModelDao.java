@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.sunbeam.dto.CarCompareResponseDTO;
 import com.sunbeam.dto.CarModelResponseDTO;
 import com.sunbeam.entities.CarModel;
 public interface CarModelDao extends JpaRepository<CarModel, Long> {
@@ -20,4 +21,14 @@ public interface CarModelDao extends JpaRepository<CarModel, Long> {
 
 	@Query("SELECT new com.sunbeam.dto.CarModelResponseDTO(c.carModelId, c.carSeriesName) FROM CarModel c WHERE c.modelName = :model")
 	List<CarModelResponseDTO> findVariantsByModel(String model);
+
+	CarModel findByCarModelId(Long id);
+
+	boolean existsByCarModelCompany(String carModelCompany);
+
+	boolean existsByModelName(String modelName);
+
+	boolean existsByCarSeriesName(String carSeriesName);
+
+	void deleteByCarSeriesName(String carSeriesName);
 }
