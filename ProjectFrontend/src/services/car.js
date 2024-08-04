@@ -5,6 +5,8 @@ export async function getBrandFData() {
 
   const data = response.data;
 
+
+  // changing data into desired format for component reusability
   const result = data.map((value) => {
     return {
       carModelId: -1,
@@ -16,7 +18,7 @@ export async function getBrandFData() {
 }
 
 export async function getModelData(company) {
-    console.log(company)
+     
   const response = await axios.get(
     `http://localhost:8080/carModel/model/${company}`
   );
@@ -34,7 +36,7 @@ export async function getModelData(company) {
 }
 
 export async function getVariantData(model) {
-    console.log(model)
+    
   const response = await axios.get(
     `http://localhost:8080/carModel/variant/${model}`
   );

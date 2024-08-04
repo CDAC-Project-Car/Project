@@ -15,6 +15,7 @@ export default function Sell() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
 
+  // for getting brand data (one time)
   useEffect(() => {
     const fetchBrand = async () => {
       const data = await getBrandFData();
@@ -22,6 +23,8 @@ export default function Sell() {
     };
     fetchBrand();
   }, []);
+
+  // for getting model data (on basis of brand selection)
 
   useEffect(() => {
     const fetchModels = async () => {
@@ -38,6 +41,8 @@ export default function Sell() {
     fetchModels();
   }, [selectedBrand]);
 
+  // for getting model data (on basis of model selection)
+
   useEffect(() => {
     const fetchVariant = async () => {
       if (selectedModel) {
@@ -45,7 +50,7 @@ export default function Sell() {
         setVariants(data);
       } else {
         setVariants([]);
-        // setSelectedVariant(null);
+        
       }
     };
     fetchVariant();
@@ -70,6 +75,12 @@ export default function Sell() {
   const [isAirbags, setAirbags] = useState(false);
   const [isSeatBelt, setSeatBelt] = useState(false);
   const [isCentralLocking, setCentralLocking] = useState(false);
+
+  const onSell = ()=>{
+    //to do
+    console.log(selectedVariant);
+
+  }
 
   return (
     <div>
@@ -101,7 +112,6 @@ export default function Sell() {
                       setSelectedBrand(e.target.value);
                       setSelectedModel(null);
                       setVariants([]);
-                      // setModels([])
                     }}
                     disabled={false}
                     defaultOption="Select Car Brand"
@@ -117,9 +127,8 @@ export default function Sell() {
                     value={selectedModel}
                     onChange={(e) => {
                       setSelectedModel(e.target.value);
-                      // setSelectedVariant(null); // check
+
                       setVariants([]);
-                      
                     }}
                     disabled={!selectedBrand}
                     defaultOption="Select Car Model"
@@ -135,8 +144,7 @@ export default function Sell() {
                     value={selectedVariant}
                     onChange={(e) => {
                       setSelectedVariant(e.target.value);
-                      debugger;
-                      
+                       
                     }}
                     disabled={!selectedModel}
                     defaultOption="Select Car Variant"
@@ -549,7 +557,7 @@ export default function Sell() {
 
             <center>
               <div className="mb-4">
-                <button className="btn btn-success mt-3">Sell</button>
+                <button className="btn btn-success mt-3" onClick={onSell}>Sell</button>
                 <button className="btn btn-danger ms-3 mt-3">Cancel</button>
               </div>
             </center>
