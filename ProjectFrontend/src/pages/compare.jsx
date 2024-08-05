@@ -2,8 +2,9 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { getBrandFData, getModelData, getVariantData } from "../services/car";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Select } from "../components/Select";
+import { toast } from "react-toastify";
 
 export default function Compare() {
   // for select-options
@@ -110,6 +111,28 @@ export default function Compare() {
     fetchVariant();
   }, [selectedModelCar2]);
 
+  // -------------------------------------------------------------------------------------
+
+  const navigate = useNavigate();
+
+  const onCompare = () => {
+
+    // console.log("m1 :: "+selectedVariantCar1)
+    // console.log("m2 :: "+selectedVariantCar2)
+
+    const dataToSend= {
+      m1:selectedVariantCar1,
+      m2:selectedVariantCar2
+    }
+
+    if(dataToSend.m1==dataToSend.m2)
+      toast.warn("Please Select Different Model !")
+    else
+    navigate('/compareRender' , { state: dataToSend })
+
+
+  };
+
   return (
     <div>
       <Navbar />
@@ -124,7 +147,7 @@ export default function Compare() {
           <div className="col-10">
             <div class="card mb-5">
               <h5 class="card-header">Find Your Best !</h5>
-              <div class="card-body" >
+              <div class="card-body">
                 {/* <h5 class="card-title">Compare Cars</h5> */}
 
                 <div className="row">
@@ -175,8 +198,7 @@ export default function Compare() {
                   </div>
 
                   <div className="col">
-
-                  <h5>Car-2</h5>
+                    <h5>Car-2</h5>
 
                     <div className="mb-3">
                       <Select
@@ -226,9 +248,7 @@ export default function Compare() {
                 <br />
 
                 <center>
-                  <Link to="/login">
-                    <button className="btn btn-success">Compare</button>
-                  </Link>
+                  <button className="btn btn-success" onClick={onCompare} >Compare</button>
                 </center>
               </div>
             </div>
