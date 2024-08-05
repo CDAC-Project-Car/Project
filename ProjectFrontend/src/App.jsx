@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Cart from './pages/cart';
 import MyCarList from './pages/mylistedcars';
 import MyOrders from './pages/myorders';
+import CompareRender from './pages/compareRender';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/myorders" element={<MyOrders/>}/>
         <Route path="/mylistedcars" element={<MyCarList/>}/>
+        <Route path="/compareRender" element={<CompareRender/>}/>
         </Routes>
         <ToastContainer />
 

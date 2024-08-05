@@ -43,3 +43,14 @@ export async function getVariantData(model) {
 
   return response.data;
 }
+
+export async function getCompareCarData({m1, m2}) {
+
+  const response = await axios.get(`http://localhost:8080/carModel/compare/${m1}/${m2}`)
+
+  
+
+  return response.data;
+
+  
+}
