@@ -232,7 +232,30 @@ export default function Sell() {
               {/* row-3 */}
             </div>
 
-            <h5>Currently available features :: </h5>
+            <div className="row mt-3 mb-3">
+              <div className="col">
+                <div
+                  style={{ fontWeight: "bold", fontSize: 20 }}
+                  className=" mb-1"
+                >
+                  Upload Images
+                </div>
+
+                <input
+                  class="form-control"
+                  type="file"
+                  id="formFileMultiple"
+                  // accept=".jpg,.jpeg"
+                  accept="image/*"
+                  multiple
+                />
+              </div>
+              {/* <div className="col"></div> */}
+            </div>
+
+            <div style={{ fontWeight: "bold", fontSize: 20 }} className="mb-1">
+              Currently available features ::{" "}
+            </div>
 
             <div className="row">
               <div className="col">
