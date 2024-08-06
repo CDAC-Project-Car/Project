@@ -10,7 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +38,7 @@ public class Car{
 	@Size(max = 13, message = "Car number should be less than 13 characters")
     private String carNumber;
 	
-	@NotBlank(message = "Field cannot be blank")
+	@NotNull(message = "Field cannot be blank")
 	private Boolean isInsurance;
 	
 	@NotBlank(message = "RTO location cannot be blank")
@@ -47,30 +49,31 @@ public class Car{
 	@Size(max = 20, message = "Car ownership should be less than 20 characters")
     private String carOwnership;
 	
-	@NotBlank(message = "Car mfg year cannot be blank")
-	@Size(min = 1994, message = "Car mfg before 1994 cannot be registered")
+	@NotNull(message = "Car mfg year cannot be blank")
+	@Min(value = 1994, message = "Car mfg before 1994 cannot be registered")
 	private Long carMfgYear;
     
-	@NotBlank(message = "kms driven year cannot be blank")
-	@Size(min = 0, message = "kms cannot be negative")
+	@NotNull(message = "kms driven year cannot be blank")
+	@Min(value = 0, message = "kms cannot be negative")
     private Long kmsDriven;
 	
-	@NotBlank(message = "car milage cannot be blank")
-	@Size(min = 0, message = "car milage cannot be negative")
+	@NotNull(message = "car milage cannot be blank")
+	@Min(value = 0, message = "car milage cannot be negative")
     private Long carMilage;
 	
 	@NotBlank(message = "Car color cannot be blank")
 	@Size(max = 10, message = "Car color should be less than 10 characters")
 	private String carColor;
 	
-	@NotBlank(message = "Field cannot be blank")
+	@NotNull(message = "Field cannot be blank")
     private Boolean carStatus;
 	
-	@NotBlank(message = "Field cannot be blank")
-    private Boolean isDeletedCar;
+	@NotNull(message = "Field cannot be blank")
+	@Column(nullable = false)
+    private Boolean isDeletedCar = false;
 	
-	@NotBlank(message = "car selling price cannot be blank")
-	@Size(min = 0, message = "car selling price cannot be negative")
+	@NotNull(message = "car selling price cannot be blank")
+	@Min(value = 0, message = "car selling price cannot be negative")
 	private Long carSellingPrice;
 	
 	@ManyToOne

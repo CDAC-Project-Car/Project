@@ -2,20 +2,16 @@ package com.sunbeam.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.sunbeam.custom_exception.ApiResponseException;
 import com.sunbeam.dao.CarModelDao;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.CarCompareResponseDTO;
 import com.sunbeam.dto.CarModelDeleteRequestDTO;
+import com.sunbeam.dto.CarModelRequestDTO;
 import com.sunbeam.dto.CarModelResponseDTO;
 import com.sunbeam.entities.CarModel;
 
@@ -62,10 +58,11 @@ public class CarModelServiceImpl implements CarModelService {
 	}
 
 	@Override
-	public ApiResponse addCarModel(CarModel carModel) {
+	public ApiResponse addCarModel(CarModelRequestDTO carModel) {
 		if(carModelDao.existsByCarModelCompany(carModel.getCarModelCompany()) && carModelDao.existsByModelName(carModel.getModelName()) && carModelDao.existsByCarSeriesName(carModel.getCarSeriesName()))
 			throw new ApiResponseException("Car Model already exists...!");
-		carModelDao.save(carModel);
+		CarModel persistantCarModel = mapper.map(carModel, CarModel.class);
+		carModelDao.save(persistantCarModel);
 		return new ApiResponse("Car Model added successfully...!");
 	}
 
@@ -76,7 +73,7 @@ public class CarModelServiceImpl implements CarModelService {
 			carModelDao.deleteByCarSeriesName(carModel.getCarSeriesName());
 			return new ApiResponse("Car Model deleted successfully...!");	
 		}		
-		throw new ApiResponseException("Car Model already exists...!");
+		throw new ApiResponseException("Car Model already deleted...!");
 	}
 		
 }

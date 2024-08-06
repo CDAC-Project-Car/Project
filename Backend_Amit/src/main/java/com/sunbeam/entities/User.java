@@ -1,8 +1,6 @@
 package com.sunbeam.entities;
 
 import java.time.LocalDate;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,7 +8,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -62,8 +59,10 @@ public class User{
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length=10,nullable=false)
-	private Role role=Role.USER;
+	private Role role;
 	
-//	@OneToMany(mappedBy = "user")
+	private Boolean isDeleted = false;
+	
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //	private List<Car> cars;
 }

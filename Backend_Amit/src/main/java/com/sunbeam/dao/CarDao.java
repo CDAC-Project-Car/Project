@@ -5,4 +5,6 @@ import com.sunbeam.entities.Car;
 
 public interface CarDao extends JpaRepository<Car, Long> {
 
+	boolean existsByCarNumber(String carNumber);
+
 }
