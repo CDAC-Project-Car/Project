@@ -5,7 +5,7 @@ export async function LoginService(email, password) {
         email, password
     }
 
-    // to do
+    
     const response = await axios.post('http://localhost:8080/users/login', body);
 
     return response;

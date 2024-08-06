@@ -3,6 +3,7 @@ package com.sunbeam.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "cart")
 public class Car{
 	
 	@Id
@@ -87,5 +88,9 @@ public class Car{
 	@ManyToOne
 	@JoinColumn(name = "user_id_fk")
 	private User user;	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="cart_id")
+	private Cart cart;
 
 }
