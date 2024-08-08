@@ -257,6 +257,8 @@ export default function Sell() {
               Currently available features ::{" "}
             </div>
 
+            {/* forgot to make component , if required will make component */}
+
             <div className="row">
               <div className="col">
                 <div class="custom-control custom-checkbox">
