@@ -1,0 +1,53 @@
+.carditem-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 15px;
+}
+
+.carditem-title {
+    margin-top: 10px;
+    padding-left: 5px;
+}
+
+.carditem-title > span {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.carditem-description {
+    margin-top: 10px;
+    margin-left: 0px;
+}
+
+.carditem-description > span {
+    font-size: 1.0rem;
+    color: rgb(112, 112, 112);
+}
+
+
+
+// .carditem{ 
+//     &-container{
+//         flex-direction: column;
+//         justify-content: flex-start;
+//     }
+//     &-title{
+//         margin-top: 10px;
+//         padding-left: 5px;
+//         &>span{
+//             font-size: 1.5rem;
+//             font-weight: 600;
+//         }
+//     }
+    
+//     &-description{
+//         margin-top: 10px;
+//         margin-left: 5px;
+//         &>span{
+//             font-size: 1.0rem;
+//             color: rgb(112, 112, 112);
+//         }
+//     }
+// }
