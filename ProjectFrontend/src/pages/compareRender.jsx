@@ -70,13 +70,7 @@ function CompareRender() {
                 <table className="table table-striped ">
                   <thead className="thead-dark">
                     <th>Features</th>
-                    {/* <th>{carData[0].modelName}</th> */}
-                    {/* <th>{carData[1].modelName}</th> */}
-                    {
-                      //   carData.map((car)=>{
-                      //       return <th>{car[modelName]}</th>
-                      //   })
-                    }
+                    
                     <th>{carM1}</th>
                     <th>{carM2}</th>
                   </thead>
