@@ -31,6 +31,8 @@ public interface CarModelDao extends JpaRepository<CarModel, Long> {
 	boolean existsByCarSeriesName(String carSeriesName);
 
 	void deleteByCarSeriesName(String carSeriesName);
+
+	CarModel findByCarSeriesName(String carSeriesName);
 	
 	
 }

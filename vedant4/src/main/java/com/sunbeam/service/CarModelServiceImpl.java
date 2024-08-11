@@ -75,5 +75,24 @@ public class CarModelServiceImpl implements CarModelService {
 		}		
 		throw new ApiResponseException("Car Model already deleted...!");
 	}
+	
+	@Override
+	public CarModel beforeEditCarModel(CarModelDeleteRequestDTO carModel) {
+		if(carModelDao.existsByCarModelCompany(carModel.getCarModelCompany()) && carModelDao.existsByModelName(carModel.getModelName()) && carModelDao.existsByCarSeriesName(carModel.getCarSeriesName()))
+		{
+			CarModel persistantCarModel = carModelDao.findByCarSeriesName(carModel.getCarSeriesName());
+			CarModel carModelBeforeEdit = mapper.map(persistantCarModel, CarModel.class);
+			return carModelBeforeEdit;	
+		}		
+		throw new ApiResponseException("Car Model doesn't exists...!");
+	}
+
+	@Override
+	public ApiResponse editCarModel(CarModel carModel) {
+		//Long carModelId = carModelDao.findByCarSeriesName(carModel.getCarSeriesName()).getCarModelId();
+		CarModel persistantCarModel = carModelDao.findByCarModelId(carModel.getCarModelId());
+		carModelDao.save(persistantCarModel);
+		return new ApiResponse("Car Model updated successfully...!");	
+	}
 		
 }

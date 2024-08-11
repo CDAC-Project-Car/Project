@@ -1,6 +1,7 @@
 package com.sunbeam.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
 
@@ -25,7 +26,7 @@ public class ListedCarsResponseDTO {
 		
 	private Long carSellingPrice;
 		
-	private Date carListingDate;
+	private LocalDate carListingDate;
 	
 	private Boolean carStatus;
 }

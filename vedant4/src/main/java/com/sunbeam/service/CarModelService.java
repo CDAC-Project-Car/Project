@@ -6,6 +6,7 @@ import com.sunbeam.dto.CarCompareResponseDTO;
 import com.sunbeam.dto.CarModelDeleteRequestDTO;
 import com.sunbeam.dto.CarModelRequestDTO;
 import com.sunbeam.dto.CarModelResponseDTO;
+import com.sunbeam.entities.CarModel;
 
 public interface CarModelService {
 
@@ -20,5 +21,10 @@ public interface CarModelService {
 	ApiResponse addCarModel(CarModelRequestDTO carModel);
 
 	ApiResponse deleteCarModel(CarModelDeleteRequestDTO carModel);
+	
+	CarModel beforeEditCarModel(CarModelDeleteRequestDTO carModel);
+
+	ApiResponse editCarModel(CarModel carModel);
+
 
 }

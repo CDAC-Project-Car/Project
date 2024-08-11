@@ -1,6 +1,7 @@
 package com.sunbeam.entities;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -79,8 +80,8 @@ public class Car{
 	@Min(value = 0, message = "car selling price cannot be negative")
 	private Long carSellingPrice;
 	
-	@NotNull(message="Listing Date cannot be blank")
-	private Date carListingDate;
+	//@NotNull(message="Listing Date cannot be blank")
+	private LocalDate carListingDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "car_model_id_fk")
