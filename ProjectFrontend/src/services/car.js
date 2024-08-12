@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export async function getBrandFData() {
   const response = await axios.get("http://localhost:8080/carModel/company");
@@ -51,6 +52,24 @@ export async function getCompareCarData({m1, m2}) {
   
 
   return response.data;
+
+  
+}
+
+export async function saveCar(formData) {
+
+  try {
+    const response = await axios.post("http://localhost:8080/cars/sell", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      } }  );
+    return response.data;
+  } catch (error) {
+    toast.error(error)
+  }
+
+  
+
 
   
 }
