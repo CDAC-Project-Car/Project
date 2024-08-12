@@ -1,5 +1,9 @@
 package com.sunbeam.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.sunbeam.entities.ModelSpecification;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +16,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CarRequestDTO {
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Long userId;
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Long modelId;
   
 	private String carNumber;
 	
@@ -33,6 +43,6 @@ public class CarRequestDTO {
 
 	private Long carSellingPrice;
 	
-	private ModelSpecificationRequestDTO modelSpecification;
+	private ModelSpecification modelSpecification;
 
 }

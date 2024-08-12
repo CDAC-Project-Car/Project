@@ -43,7 +43,8 @@ public class User{
 	private String email;
 	
 	@NotBlank(message="Password cannot be blank")
-	@Size(min=8,max=20,message="Password should be more than 8 and less than 20 characters ")
+	@Size(min=8,max=100,message="Password should be more than 8 and less than 20 characters ")
+	@Column(length = 100)
 	private String password;
 	
 	@NotBlank(message="Mobile Number cannot be blank")
@@ -59,9 +60,10 @@ public class User{
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length=10,nullable=false)
-	private Role role;
+	private Role role=Role.USER;
 	
 	private Boolean isDeleted = false;
+
 	
 //	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //	private List<Car> cars;

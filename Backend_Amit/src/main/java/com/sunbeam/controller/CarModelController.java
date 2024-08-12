@@ -10,11 +10,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.sunbeam.dto.CarCompareResponseDTO;
 import com.sunbeam.dto.CarModelDeleteRequestDTO;
 import com.sunbeam.dto.CarModelRequestDTO;
+import com.sunbeam.entities.CarModel;
 import com.sunbeam.service.CarModelService;
 
 
@@ -26,26 +31,48 @@ public class CarModelController {
 	@Autowired
 	private CarModelService carModelService;
 	
-	@PostMapping("/add")
-	public ResponseEntity<?> addCarModel(@RequestBody CarModelRequestDTO carModel)
-	{
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(carModelService.addCarModel(carModel));
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
-	}
+	// @PostMapping("/add")
+	// public ResponseEntity<?> addCarModel(@RequestBody CarModelRequestDTO carModel)
+	// {
+	// 	try {
+	// 		return ResponseEntity.status(HttpStatus.OK).body(carModelService.addCarModel(carModel));
+	// 	}catch (Exception e) {
+	// 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	// 	}
+	// }
 	
 	
-	@DeleteMapping("/delete")
-	public ResponseEntity<?> deleteCarModel(@RequestBody CarModelDeleteRequestDTO carModel)
-	{
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(carModelService.deleteCarModel(carModel));
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
-	}
+	// @DeleteMapping("/delete")
+	// public ResponseEntity<?> deleteCarModel(@RequestBody CarModelDeleteRequestDTO carModel)
+	// {
+	// 	try {
+	// 		return ResponseEntity.status(HttpStatus.OK).body(carModelService.deleteCarModel(carModel));
+	// 	}catch (Exception e) {
+	// 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	// 	}
+	// }
+	
+	
+	// @PutMapping("/beforeEdit")
+	// public ResponseEntity<?> beforeEditCarModel(@RequestBody CarModelDeleteRequestDTO carModel)
+	// {
+	// 	try {
+	// 		return ResponseEntity.status(HttpStatus.OK).body(carModelService.beforeEditCarModel(carModel));
+	// 	}catch (Exception e) {
+	// 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	// 	}
+	// }
+	
+	
+	// @PutMapping("/edit")
+	// public ResponseEntity<?> editCarModel(@RequestBody CarModel carModel)
+	// {
+	// 	try {
+	// 		return ResponseEntity.status(HttpStatus.OK).body(carModelService.editCarModel(carModel));
+	// 	}catch (Exception e) {
+	// 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	// 	}
+	// }
 	
 		
 	

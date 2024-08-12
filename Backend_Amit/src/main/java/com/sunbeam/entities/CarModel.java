@@ -78,7 +78,7 @@ public class CarModel {
     private Long groundClearance;
 	
 	@NotBlank(message = "Field cannot be blank")
-	@Max(value = 10, message = "Field should be less than 10 characters")
+	//@Max(value = 10, message = "Field should be less than 10 characters")
 	private String tyreType;
     
 	@NotNull(message = "Field cannot be blank")
@@ -107,7 +107,7 @@ public class CarModel {
     private Long noOfCylinders;
 	
 	@NotBlank(message = "Field cannot be blank")
-	@Max(value = 20, message = "Field should be less than 20 characters")
+	//@Max(value = 20, message = "Field should be less than 20 characters")
 	private String fuelType;
 	
 	@NotNull(message = "Field cannot be blank")

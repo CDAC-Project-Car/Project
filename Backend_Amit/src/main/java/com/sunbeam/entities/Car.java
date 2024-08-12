@@ -1,5 +1,9 @@
 package com.sunbeam.entities;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -27,7 +32,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(exclude = "cart")
+//@ToString(exclude = "cart")
 public class Car{
 	
 	@Id
@@ -67,7 +72,7 @@ public class Car{
 	private String carColor;
 	
 	@NotNull(message = "Field cannot be blank")
-    private Boolean carStatus;
+    private Boolean carStatus = false;
 	
 	@NotNull(message = "Field cannot be blank")
 	@Column(nullable = false)
@@ -76,6 +81,9 @@ public class Car{
 	@NotNull(message = "car selling price cannot be blank")
 	@Min(value = 0, message = "car selling price cannot be negative")
 	private Long carSellingPrice;
+
+	//@NotNull(message="Listing Date cannot be blank")
+	private LocalDate carListingDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "car_model_id_fk")
@@ -88,9 +96,12 @@ public class Car{
 	@ManyToOne
 	@JoinColumn(name = "user_id_fk")
 	private User user;	
-	
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="cart_id")
 	private Cart cart;
+	
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Image> images = new ArrayList<Image>();
 
 }

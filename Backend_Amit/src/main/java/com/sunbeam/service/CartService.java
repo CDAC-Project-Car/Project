@@ -2,19 +2,18 @@ package com.sunbeam.service;
 
 import java.util.List;
 
+import com.sunbeam.dto.AddToCartRequestDTO;
 import com.sunbeam.dto.ApiResponse;
-import com.sunbeam.entities.Car;
-import com.sunbeam.entities.Cart;
-import com.sunbeam.entities.User;
+import com.sunbeam.dto.CartResponseDTO;
+
 
 public interface CartService {
 
-	List<Car> listAllCartItems(Long cartId);
+	List<CartResponseDTO> listAllCartItems(Long userId);
 	
-	Cart addItemToCart(Long cartId,Long carId);
+	ApiResponse addItemToCart(Long userId,AddToCartRequestDTO cardto);
 	
-	Cart removeItemFromCart(Long cartId,Long carId);
+	ApiResponse removeItemFromCart(Long userID,Long carId);
 
-	ApiResponse createCart(Cart cart);
-	
 }
+

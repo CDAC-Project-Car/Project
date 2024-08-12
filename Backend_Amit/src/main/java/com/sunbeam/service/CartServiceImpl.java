@@ -2,17 +2,22 @@ package com.sunbeam.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sunbeam.custom_exception.ApiResponseException;
 import com.sunbeam.dao.CarDao;
 import com.sunbeam.dao.CartRepository;
+import com.sunbeam.dao.UserDao;
+import com.sunbeam.dto.AddToCartRequestDTO;
 import com.sunbeam.dto.ApiResponse;
+import com.sunbeam.dto.CartResponseDTO;
 import com.sunbeam.entities.Car;
+import com.sunbeam.entities.CarModel;
 import com.sunbeam.entities.Cart;
 import com.sunbeam.entities.User;
 
@@ -20,65 +25,88 @@ import com.sunbeam.entities.User;
 @Service
 public class CartServiceImpl implements CartService {
 
+	
 	@Autowired
-	private CartRepository cartRepo;
-	
-	@Autowired 
-	private CarDao carDao;
-	
+    private CartRepository cartRepository;
+
+    @Autowired
+    private CarDao carRepository;
+
+    @Autowired
+    private UserDao userRepository;
+    
+   
+    
+    @Override
+    public List<CartResponseDTO> listAllCartItems(Long userId) {
+        Optional<Cart> cartOpt = cartRepository.findByUser_UserId(userId);
+        if (cartOpt.isPresent()) {
+            Cart cart = cartOpt.get();
+            return cart.getCars().stream().map(car -> {
+                CarModel model = car.getCarModel();
+                return new CartResponseDTO(
+                    model.getCarModelCompany(),
+                    model.getModelName(),
+                    car.getCarSellingPrice()
+                );
+            }).collect(Collectors.toList());
+        }
+        return List.of();
+    }
+
 	
 	@Override
-	public List<Car> listAllCartItems(Long cartId) {
-		Optional<Cart> cartOptional=cartRepo.findById(cartId);
-		if(cartOptional.isPresent()) {
-			Cart cart=cartOptional.get();
-			return cart.getCars();
-		}else {
-			throw new RuntimeException("Cart not found");
-		}
-	}
+    public ApiResponse addItemToCart(Long userId, AddToCartRequestDTO addToCartRequestDTO) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return new ApiResponse("User not found");
+        }
+        User user = userOpt.get();
+
+        Optional<Car> carOpt = carRepository.findByCarModel_CarModelCompanyAndCarModel_ModelName(
+            addToCartRequestDTO.getCarModelCompany(),
+            addToCartRequestDTO.getModelName()
+        );
+        if (carOpt.isEmpty()) {
+            return new ApiResponse("Car not found");
+        }
+        Car car = carOpt.get();
+
+        Optional<Cart> cartOpt = cartRepository.findByUser_UserId(userId);
+        Cart cart;
+        if (cartOpt.isPresent()) {
+            cart = cartOpt.get();
+        } else {
+            cart = new Cart();
+            cart.setUser(user);
+        }
+
+        cart.getCars().add(car);
+        cartRepository.save(cart);
+
+        return new ApiResponse("Car added to cart successfully");
+    }
+
 
 	@Override
-	public Cart addItemToCart(Long cartId, Long carId) {
-		Optional<Cart> cartOptional=cartRepo.findById(carId);
-		Optional<Car> carOptional=carDao.findById(carId);
-		
-		if(cartOptional.isPresent()&& carOptional.isPresent()) {
-			Cart cart=cartOptional.get();
-			Car car=carOptional.get();
-			
-			cart.addToCart(car);
-			return cartRepo.save(cart);
-		}else {
-			throw new RuntimeException("Cart or Car not found");
-		}
-	}
+    public ApiResponse removeItemFromCart(Long userId, Long carId) {
+        Optional<Cart> cartOpt = cartRepository.findByUser_UserId(userId);
+        if (cartOpt.isEmpty()) {
+            return new ApiResponse("Cart not found");
+        }
+        Cart cart = cartOpt.get();
 
-	@Override
-	public Cart removeItemFromCart(Long cartId, Long carId) {
-		Optional<Cart> cartOptional=cartRepo.findById(carId);
-		Optional<Car> carOptional=carDao.findById(carId);
-		
-		if(cartOptional.isPresent()&& carOptional.isPresent()) {
-			Cart cart=cartOptional.get();
-			Car car=carOptional.get();
-			
-			cart.removeFromCart(car);
-			carDao.delete(car);
-			
-			return cartRepo.save(cart);
-		}else {
-			throw new RuntimeException("Cart or Car not found");
-		}
-	}
+        boolean removed = cart.getCars().removeIf(car -> car.getCarId().equals(carId));
+        if (!removed) {
+            return new ApiResponse("Car not found in cart");
+        }
 
-	@Override
-	public ApiResponse createCart(Cart cart) {
-		if(cartRepo.existsById(cart.getCartId())) {
-			return new ApiResponse("Cart already exsists...!!!");
-		}
-		cartRepo.save(cart);
-		return new ApiResponse("Cart created successfully...!!!");
+        cartRepository.save(cart);
+        return new ApiResponse("Car removed from cart successfully");
+    }
 	}
 	
-}
+	
+
+
+	

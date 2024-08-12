@@ -2,6 +2,7 @@ package com.sunbeam.dto;
 
 import com.sunbeam.entities.Role;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,12 +10,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class UserSignInResponseDTO {
 	
-	private Long userId;
+	private String jwt;
 	
-	private String userName;
+	private String mesg;
 	
-	private Role role = Role.USER;
+	
+//	private Long userId;
+//	
+//	private String userName;
+//	
+//	private String email;
+	
+	
+	//private Role role = Role.USER;
 	
 }
