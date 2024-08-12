@@ -22,7 +22,7 @@ export async function RegisterService(firstName, lastName, email, password, addr
     console.log(body)
 
     // to do
-    const response = await axios.post('http://localhost:8080/users/addUser', body)
+    const response = await axios.post('http://localhost:8080/users/registerUser', body)
 
     return response;
 
