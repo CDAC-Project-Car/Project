@@ -22,7 +22,7 @@ public interface CarModelService {
 
 	ApiResponse deleteCarModel(CarModelDeleteRequestDTO carModel);
 
-	CarModel beforeEditCarModel(CarModelDeleteRequestDTO carModel);
+	CarModel beforeEditCarModel(Long carModelId);
 
 	ApiResponse editCarModel(CarModel carModel);
 

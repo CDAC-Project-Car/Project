@@ -7,14 +7,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sunbeam.custom_exception.ApiResponseException;
-import com.sunbeam.dao.CarDao;
 import com.sunbeam.dao.CarModelDao;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.CarCompareResponseDTO;
 import com.sunbeam.dto.CarModelDeleteRequestDTO;
 import com.sunbeam.dto.CarModelRequestDTO;
 import com.sunbeam.dto.CarModelResponseDTO;
-import com.sunbeam.entities.Car;
 import com.sunbeam.entities.CarModel;
 
 @Service
@@ -79,20 +77,19 @@ public class CarModelServiceImpl implements CarModelService {
 	}
 
 	@Override
-	public CarModel beforeEditCarModel(CarModelDeleteRequestDTO carModel) {
-		if(carModelDao.existsByCarModelCompany(carModel.getCarModelCompany()) && carModelDao.existsByModelName(carModel.getModelName()) && carModelDao.existsByCarSeriesName(carModel.getCarSeriesName()))
+	public CarModel beforeEditCarModel(Long carModelId) {
+		if(carModelDao.existsById(carModelId))
 		{
-			CarModel persistantCarModel = carModelDao.findByCarSeriesName(carModel.getCarSeriesName());
-			CarModel carModelBeforeEdit = mapper.map(persistantCarModel, CarModel.class);
-			return carModelBeforeEdit;	
+			CarModel persistantCarModel = carModelDao.findByCarModelId(carModelId);
+			return persistantCarModel;	
 		}		
 		throw new ApiResponseException("Car Model doesn't exists...!");
 	}
 
 	@Override
 	public ApiResponse editCarModel(CarModel carModel) {
-		//Long carModelId = carModelDao.findByCarSeriesName(carModel.getCarSeriesName()).getCarModelId();
 		CarModel persistantCarModel = carModelDao.findByCarModelId(carModel.getCarModelId());
+		mapper.map(carModel, persistantCarModel);
 		carModelDao.save(persistantCarModel);
 		return new ApiResponse("Car Model updated successfully...!");	
 	}

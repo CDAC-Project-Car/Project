@@ -56,11 +56,11 @@ public class AdminController {
 		}
 	}
 	
-	@PutMapping("/beforeEditModel")
-	public ResponseEntity<?> beforeEditCarModel(@RequestBody CarModelDeleteRequestDTO carModel)
+	@GetMapping("/beforeEditModel/{carModelId}")
+	public ResponseEntity<?> beforeEditCarModel(@PathVariable Long carModelId)
 	{
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(carModelService.beforeEditCarModel(carModel));
+			return ResponseEntity.status(HttpStatus.OK).body(carModelService.beforeEditCarModel(carModelId));
 		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
@@ -91,6 +91,16 @@ public class AdminController {
 	{
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(userService.getUserDetails(email));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	@GetMapping("/getAllUsers")
+	public ResponseEntity<?> getAllUserDetails()
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(userService.getAllUserDetails());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}

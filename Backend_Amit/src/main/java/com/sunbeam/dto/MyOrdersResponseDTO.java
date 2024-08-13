@@ -1,6 +1,7 @@
 package com.sunbeam.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,17 +13,22 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ListedCarsResponseDTO {
+public class MyOrdersResponseDTO {
 
 	private String carModelCompany;
 	
 	private String modelName;
 		
 	private String carSeriesName;
-		
-	private Long carSellingPrice;
-		
-	private LocalDate carListingDate;
 	
-	private Boolean carStatus;
+	private String carNumber;
+	
+	private Long transactionId;
+
+	private Integer transactionAmount;
+
+	private String transactionType;
+
+	private LocalDateTime transactionDate;
+	
 }

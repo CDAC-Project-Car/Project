@@ -7,12 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.UserRegisterRequestDTO;
+import com.sunbeam.dto.UserResponseDTO;
 import com.sunbeam.dto.UserSignInResponseDTO;
 import com.sunbeam.dto.UserSigninRequestDTO;
 import com.sunbeam.entities.User;
@@ -58,7 +62,7 @@ public class UserController {
 		//=> authentication n authorization  successful !
 		System.out.println(verifiedToken.getPrincipal().getClass());//custom user details object
 		//create JWT n send it to the clnt in response
-		User user=userDao.findByEmail(request.getPassword());
+		User user =userDao.findByEmail(request.getPassword());
 		
 	// UserDTO userdto=	userService.getUserByEmail(request.getEmail());
 		
@@ -68,6 +72,27 @@ public class UserController {
 	    
 		return ResponseEntity.
 				status(HttpStatus.CREATED).body(resp);
+	}
+	
+	
+	@GetMapping("/beforeEdit/{userId}")
+	public ResponseEntity<?> beforeEdit(@PathVariable Long userId)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(userService.beforeEdit(userId));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	@PutMapping("/edit")
+	public ResponseEntity<?> edit(@RequestBody UserResponseDTO user)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(userService.edit(user));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 	
 

@@ -3,17 +3,11 @@ package com.sunbeam.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.sunbeam.custom_exception.ApiResponseException;
 import com.sunbeam.dao.CarDao;
 import com.sunbeam.dao.CarModelDao;
@@ -120,25 +114,54 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public CarBeforeEditResponseDTO beforeEditCarDetails(Long carId) {
-		Car car = carDao.findById(carId).orElseThrow(()-> new ApiResponseException("Car not found...!"));
 		
-		ModelSpecificationRequestDTO persistantModelSpecification = mapper.map(car.getModelSpecification(), ModelSpecificationRequestDTO.class);
+		if(carDao.existsById(carId)) {
+			Car car = carDao.findById(carId).orElseThrow(()-> new ApiResponseException("Car not found...!"));
+			ModelSpecification modelSpecification = modelSpecificationDao.findById(car.getModelSpecification().getModelSpecificationId()).orElseThrow(()-> new ApiResponseException("Model specification not found....!"));
+			ModelSpecificationRequestDTO persistantModelSpecification = mapper.map(modelSpecification, ModelSpecificationRequestDTO.class);
+			CarBeforeEditResponseDTO persistantCar = mapper.map(car, CarBeforeEditResponseDTO.class);
+			persistantCar.setModelSpecificationDetails(persistantModelSpecification);
+			return persistantCar;
+		}
+		throw new ApiResponseException("Car not found....!");
 		
-		if(car.getIsDeletedCar())
-			throw new ApiResponseException("Car is deleted...!");
-		CarBeforeEditResponseDTO persistantCar = mapper.map(car, CarBeforeEditResponseDTO.class);
-		persistantCar.setModelSpecificationDetails(persistantModelSpecification);
-		return persistantCar;
+//		Car car = carDao.findById(carId).orElseThrow(()-> new ApiResponseException("Car not found...!"));
+//		
+//		ModelSpecificationRequestDTO persistantModelSpecification = mapper.map(car.getModelSpecification(), ModelSpecificationRequestDTO.class);
+//		
+//		if(car.getIsDeletedCar())
+//			throw new ApiResponseException("Car is deleted...!");
+//		CarBeforeEditResponseDTO persistantCar = mapper.map(car, CarBeforeEditResponseDTO.class);
+//		persistantCar.setModelSpecificationDetails(persistantModelSpecification);
+//		return persistantCar;
 	}
 
 	@Override
 	public ApiResponse editCarDetails(CarBeforeEditResponseDTO editedCar) {
-			Car car = mapper.map(editedCar, Car.class);
-			ModelSpecification modelSpecification = mapper.map(editedCar.getModelSpecificationDetails(), ModelSpecification.class);
-			modelSpecificationDao.save(modelSpecification);
-			carDao.save(car);
-			return new ApiResponse("Car details edited successfully...!");
+		Car car = carDao.findByCarNumber(editedCar.getCarNumber());
+		ModelSpecification modelSpecification = modelSpecificationDao.findById(editedCar.getModelSpecificationDetails().getModelSpecificationId()).orElseThrow(()-> new ApiResponseException("Model Specification not found...!"));
+		mapper.map(editedCar.getModelSpecificationDetails(), modelSpecification);
+		car.setModelSpecification(modelSpecification);
+		mapper.map(editedCar, car);
+		
+		carDao.save(car);
+		return new ApiResponse("Car details edited successfully...!");
+//			Car car = mapper.map(editedCar, Car.class);
+//			ModelSpecification modelSpecification = mapper.map(editedCar.getModelSpecificationDetails(), ModelSpecification.class);
+//			modelSpecificationDao.save(modelSpecification);
+//			carDao.save(car);
+//			return new ApiResponse("Car details edited successfully...!");
 	}
+	
+	
+	@Override
+	public ApiResponse updateSellingStatus(Long carId) {
+		Car car = carDao.findById(carId).orElseThrow(()-> new ApiResponseException("Car not found...!"));
+		car.setCarStatus(false);
+		carDao.save(car);
+		return new ApiResponse("Selling status updated successfully...!");
+	}
+	
 
 	@Override
     public ApiResponse deleteCar(Long carId) {
@@ -330,6 +353,44 @@ public class CarServiceImpl implements CarService {
 		}
 		throw new ApiResponseException("Car not found...!");
 	}
+
+	
+
+	
+//	@Override
+//    public List<ListedCarsResponseDTO> listedCarsOfSeller(Long userId) {
+//        User user = userDao.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+//        List<Car> cars = carDao.findByUser(user);
+//
+//        return cars.stream()
+//                   .map(car -> new ListedCarsResponseDTO(
+//                	   car.getCarModel().getCarModelCompany(),
+//                       car.getCarModel().getModelName(),
+//                       car.getCarModel().getCarSeriesName(),
+//                       car.getCarSellingPrice(),
+//                       car.getCarListingDate(),
+//                       car.getCarStatus()
+//                   ))
+//                   .collect(Collectors.toList());
+//    }
+	
+	
+//	@Override
+//	public List<OrderedCarsResponseDTO> orderedCarsOfBuyer(Long userId) {
+//		User user = userDao.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+//        List<Car> cars = carDao.findByUser(user);
+//
+//        return cars.stream()
+//                  .map(car -> new ListedCarsResponseDTO(
+//               	   car.getCarModel().getCarModelCompany(),
+//                      car.getCarModel().getModelName(),
+//                      car.getCarModel().getCarSeriesName(),
+//                      car.getCarSellingPrice(),
+//                      car.getCarListingDate(),
+//                      car.getCarStatus()
+//                  ))
+//                  .collect(Collectors.toList());
+//	}
 	
 	
 }

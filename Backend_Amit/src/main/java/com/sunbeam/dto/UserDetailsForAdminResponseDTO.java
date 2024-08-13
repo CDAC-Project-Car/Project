@@ -25,9 +25,9 @@ public class UserDetailsForAdminResponseDTO {
 	
 	private String mobileNumber;
 	
-	private String userAddress;
-	
 	private LocalDate dob;
+	
+	private String userAddress;
 	
 	private Role role;
 	

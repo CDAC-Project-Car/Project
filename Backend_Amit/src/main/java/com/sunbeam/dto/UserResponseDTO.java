@@ -1,7 +1,6 @@
 package com.sunbeam.dto;
 
-import com.sunbeam.entities.Role;
-
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +14,10 @@ public class UserResponseDTO {
 	
 	private String userName;
 	
-	private Role role = Role.USER;
+	private String mobileNumber;
+	
+	private LocalDate dob;
+	
+	private String userAddress;
 	
 }

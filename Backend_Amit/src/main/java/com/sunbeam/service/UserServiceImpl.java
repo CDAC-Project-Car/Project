@@ -1,7 +1,7 @@
 package com.sunbeam.service;
 
-import java.util.Optional;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,7 @@ import com.sunbeam.dao.UserDao;
 import com.sunbeam.dto.ApiResponse;
 import com.sunbeam.dto.UserDetailsForAdminResponseDTO;
 import com.sunbeam.dto.UserRegisterRequestDTO;
-import com.sunbeam.dto.UserSignInResponseDTO;
-import com.sunbeam.entities.Role;
+import com.sunbeam.dto.UserResponseDTO;
 import com.sunbeam.entities.User;
 import com.sunbeam.security.JwtUtils;
 
@@ -120,6 +119,38 @@ public class UserServiceImpl implements UserService {
 			
 	}
 	
+	
+	@Override
+	public List<UserDetailsForAdminResponseDTO> getAllUserDetails() {
+		List<User> userList = userDao.findAll();
+		List<UserDetailsForAdminResponseDTO> returnUserList = new ArrayList<>();
+		for(User user:userList) {
+			UserDetailsForAdminResponseDTO userDetails = mapper.map(userList, UserDetailsForAdminResponseDTO.class);
+			returnUserList.add(userDetails);
+		}
+		
+		return returnUserList;
+	}
+	
 
+	@Override
+	public UserResponseDTO beforeEdit(Long userId) {
+		if(userDao.existsById(userId)) {
+			User user = userDao.findById(userId).orElseThrow(()-> new ApiResponseException("User not found...!"));
+			UserResponseDTO persistantUser = mapper.map(user, UserResponseDTO.class);
+			return persistantUser;
+		}
+		throw new ApiResponseException("User does not exists...!");
+	}
+
+	@Override
+	public ApiResponse edit(UserResponseDTO user) {
+		User persistantUser = userDao.findById(user.getUserId()).orElseThrow(()->new ApiResponseException("User not found...!"));
+		mapper.map(user, persistantUser);
+		userDao.save(persistantUser);
+		return new ApiResponse("User details updated successfully...!");
+	}
+
+	
 
 }

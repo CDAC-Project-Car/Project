@@ -1,7 +1,6 @@
 package com.sunbeam.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.sunbeam.dto.CarBeforeEditResponseDTO;
-import com.sunbeam.dto.CarDetailsResponseDTO;
 import com.sunbeam.dto.CarRequestDTO;
 import com.sunbeam.dto.ListedCarsResponseDTO;
 import com.sunbeam.service.CarService;
@@ -53,8 +50,8 @@ public class CarController {
 		}
 	}
 	
-	@GetMapping("/beforeEdit")
-	public ResponseEntity<?> beforeEditCarDetails(@RequestParam Long carId)
+	@GetMapping("/beforeEdit/{carId}")
+	public ResponseEntity<?> beforeEditCarDetails(@PathVariable Long carId)
 	{
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(carService.beforeEditCarDetails(carId));
@@ -73,6 +70,18 @@ public class CarController {
 		}
 	}
 	
+	
+	@PutMapping("/updateSellingStatus/{carId}")
+	public ResponseEntity<?> updateSellingStatus(@PathVariable Long carId)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(carService.updateSellingStatus(carId));
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	
 	@DeleteMapping("/deleteCar/{carId}")
 	    public ResponseEntity<?> deleteCar(@PathVariable Long carId) {
 	        try {
@@ -88,6 +97,13 @@ public class CarController {
 	        List<ListedCarsResponseDTO> response = carService.listedCarsOfSeller(userId);
 	        return ResponseEntity.ok(response);
 	    }
+	 
+//	 @GetMapping("/orderedCars/{userId}")
+//	    public ResponseEntity<?> orderedCarsOfBuyer(@PathVariable Long userId) {
+//	        List<OrderedCarsResponseDTO> response = carService.orderedCarsOfBuyer(userId);
+//	        return ResponseEntity.ok(response);
+//	    }
+	
 	 
 //	 @GetMapping("filter/km")
 //	    public ResponseEntity<?> getCarsByKmFilter(

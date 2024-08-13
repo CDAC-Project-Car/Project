@@ -1,7 +1,5 @@
 package com.sunbeam.dto;
 
-import com.sunbeam.entities.Role;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

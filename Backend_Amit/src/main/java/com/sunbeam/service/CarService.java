@@ -42,4 +42,6 @@ public interface CarService {
 	
 	List<CarCardResponseDTO> getCarDetailsFilterByBrand(String brand);
 
+	ApiResponse updateSellingStatus(Long carId);
+
 }
