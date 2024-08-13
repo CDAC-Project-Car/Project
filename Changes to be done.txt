@@ -1,7 +1,14 @@
 in mylistedcars.jsx , 
 --> sending hardcoded userID to axios api myListedCarsApi
---> Write @CrossOrigin on CarController
+--> handling button functions edit n delete cars
 
 in myorder.jsx  ,
 --> sending hardcoded userID to axios api getMyOrders
 --> Write @CrossOrigin on TransactionController
+
+in login.jsx  , change 200 to 201
+result.status == 201
+
+in wishlist.jsx  ,
+--> sending hardcoded userID,carID to axios api getMyWishlist
+--> handling button functions of delete car from cart

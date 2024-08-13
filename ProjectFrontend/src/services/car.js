@@ -97,3 +97,19 @@ export async function getMyOrders(id) {
 
   return response.data;
 }
+
+
+
+export async function getMyWishlist(id) {
+
+  const response = await axios.get(`http://localhost:8080/cart/${id}`);
+
+  return response.data;
+}
+
+// export async function deleteCarFromCart(userId,carId) {
+
+//   const response = await axios.get(`http://localhost:8080/cart/${userId}/remove/${carId}`);
+
+//   return response.data;
+// }

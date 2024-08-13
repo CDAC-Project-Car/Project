@@ -66,7 +66,7 @@ function Navbar() {
                             <Link to='/compare' className='nav-link me-3'>Compare cars</Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/cart' className='nav-link me-3'>
+                            <Link to='/wishlist' className='nav-link me-3'>
                             <i class="fa-regular fa-heart"></i> WishList
                             </Link>
                         </li>

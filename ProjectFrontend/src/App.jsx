@@ -7,7 +7,7 @@ import Compare from "./pages/compare";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import { ToastContainer } from "react-toastify";
-import Cart from "./pages/cart";
+import WishList from "./pages/wishlist";
 import MyCarList from "./pages/mylistedcars";
 import Edit from "./pages/edit";
 import MyOrders from "./pages/myorders";
@@ -59,10 +59,10 @@ function App() {
           }
         />
         <Route
-          path="/cart"
+          path="/wishlist"
           element={
             <LocationProvider>
-              <Cart />
+              <WishList />
             </LocationProvider>
           }
         />
