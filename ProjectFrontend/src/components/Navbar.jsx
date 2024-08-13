@@ -43,7 +43,7 @@ function Navbar() {
                         <li className='nav-item'>
                             <Link to='/home' className='nav-link me-3'>Home</Link>
                         </li>
-                        <li className='nav-item dropdown me-3'>
+                        {/* <li className='nav-item dropdown me-3'>
                             <a className='nav-link dropdown-toggle' href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                 Buy Car
                             </a>
@@ -52,7 +52,8 @@ function Navbar() {
                                 <li><Link to='/buy' className='dropdown-item'>Used cars in Delhi</Link></li>
                                 <li><Link to='/buy' className='dropdown-item'>Used cars in Pune</Link></li>
                             </ul>
-                        </li>
+                        </li> */}
+                        
                         <li className='nav-item'>
                             <Link to='/sell' className='nav-link me-3'>Sell Car</Link>
                         </li>

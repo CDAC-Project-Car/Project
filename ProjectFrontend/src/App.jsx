@@ -12,6 +12,8 @@ import MyCarList from "./pages/mylistedcars";
 import MyOrders from "./pages/myorders";
 import CompareRender from "./pages/compareRender";
 import { LocationProvider } from "./data/LocationContext";
+import MainHome from "./pages/mainHome";
+
 
 function App() {
   return (
@@ -29,12 +31,20 @@ function App() {
           path="/home"
           element={
             <LocationProvider>
-              <Home />
+              <MainHome />
             </LocationProvider>
           }
         />
         <Route
-          path="/buy"
+          path="/main"
+          element={
+            <LocationProvider>
+              <MainHome />
+            </LocationProvider>
+          }
+        />
+        <Route
+         path="/buy/:carId"
           element={
             <LocationProvider>
               <Buy />
@@ -92,7 +102,7 @@ function App() {
 
         {/* Routes that don't need LocationProvider */}
         <Route index element={ <LocationProvider>
-              <Home />
+              <MainHome />
             </LocationProvider>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
