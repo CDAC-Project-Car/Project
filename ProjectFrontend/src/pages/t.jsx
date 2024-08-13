@@ -4,16 +4,11 @@ import { getBrandFData, getModelData, getVariantData } from "../services/car";
 import { useEffect, useState } from "react";
 import { Select } from "../components/Select";
 import SelectOption from "../components/SelectOption";
-import FeatureCheckbox from "../components/FeatureCheckBox";
+import axios from "axios";
 import { toast } from "react-toastify";
-import { saveCar } from "../services/car";
-import { useNavigate } from "react-router-dom";
+import FeatureCheckbox from "../components/FeatureCheckBox";
 
 export default function Sell() {
-
-  const navigate = useNavigate();
-  // for select-options
-
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [variants, setVariants] = useState([]);
@@ -52,25 +47,25 @@ export default function Sell() {
   const [isSeatBelt, setSeatBelt] = useState(false);
   const [isCentralLocking, setCentralLocking] = useState(false);
 
-  const cities = [
-    "Mumbai",
-    "Delhi",
-    "Bangalore",
-    "Chennai",
-    "Kolkata",
-    "Hyderabad",
-    "Pune",
-    "Ahmedabad",
-    "Jaipur",
-    "Lucknow",
-    "Kanpur",
-    "Nagpur",
-    "Indore",
-    "Bhopal",
-    "Coimbatore",
-  ];
 
-  // for getting brand data (one time)
+  const cities = [
+        "Mumbai",
+        "Delhi",
+        "Bangalore",
+        "Chennai",
+        "Kolkata",
+        "Hyderabad",
+        "Pune",
+        "Ahmedabad",
+        "Jaipur",
+        "Lucknow",
+        "Kanpur",
+        "Nagpur",
+        "Indore",
+        "Bhopal",
+        "Coimbatore",
+      ];
+
   useEffect(() => {
     const fetchBrand = async () => {
       const data = await getBrandFData();
@@ -78,8 +73,6 @@ export default function Sell() {
     };
     fetchBrand();
   }, []);
-
-  // for getting model data (on basis of brand selection)
 
   useEffect(() => {
     const fetchModels = async () => {
@@ -96,8 +89,6 @@ export default function Sell() {
     fetchModels();
   }, [selectedBrand]);
 
-  // for getting model data (on basis of model selection)
-
   useEffect(() => {
     const fetchVariant = async () => {
       if (selectedModel) {
@@ -110,12 +101,25 @@ export default function Sell() {
     fetchVariant();
   }, [selectedModel]);
 
-  const  onSell = async () => {
-    
+  const onSell = async () => {
+    // Validate number of additional images
+    if (additionalImages.length > 4) {
+      toast.warn("You can only upload up to 4 additional images.");
+      return;
+    }
+
+    // Validate size of additional images
+    const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+    for (const image of additionalImages) {
+      if (image.size > maxFileSize) {
+        toast.warn("Each additional image must be less than 5 MB.");
+        return;
+      }
+    }
 
     // Creating the CarRequestDTO
     const carRequestDTO = {
-      userId: 1, // to do hard coded
+      userId: 1,
       modelId: selectedVariant,
       carNumber: carNumber,
       isInsurance: isInsured,
@@ -149,23 +153,18 @@ export default function Sell() {
 
     // Create FormData to hold the DTO and the images
     const formData = new FormData();
-     
-    formData.append("dto", new Blob([JSON.stringify(carRequestDTO)], { type: "application/json" }));
+    // Append DTO as JSON string
+    formData.append("dto", JSON.stringify(carRequestDTO));
 
-    // Appending primary image as coverImage
-     
-    formData.append("coverImage", primaryImage);
+    // Append primary image as coverImage
+    if (primaryImage) {
+      formData.append("coverImage", primaryImage);
+    }
 
-    // Appending additional images with the same key name
+    // Append additional images with the same key name
     additionalImages.forEach((image) => {
       formData.append("images", image);
     });
-
-    const result = await saveCar(formData);
-    toast.success(result.message);
-    navigate('/home')
-    
-
   };
 
   return (
@@ -182,10 +181,7 @@ export default function Sell() {
           Sell Car
         </h3>
         <div className="row mt-5">
-          {/* col-2 */}
           <div className="col-2"></div>
-
-          {/* col-8 */}
           <div
             className="col-8"
             style={{
@@ -211,7 +207,6 @@ export default function Sell() {
                   />
                 </div>
               </div>
-
               <div className="col-4">
                 <div className="mb-3">
                   <Select
@@ -219,7 +214,6 @@ export default function Sell() {
                     value={selectedModel}
                     onChange={(e) => {
                       setSelectedModel(e.target.value);
-
                       setVariants([]);
                     }}
                     disabled={!selectedBrand}
@@ -228,7 +222,6 @@ export default function Sell() {
                   />
                 </div>
               </div>
-
               <div className="col-4">
                 <div className="mb-3">
                   <Select
@@ -243,30 +236,26 @@ export default function Sell() {
                   />
                 </div>
               </div>
-
-              {/* row-1 */}
             </div>
 
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label htmlFor="">Car Number</label>
+                  <label htmlFor="carNumber">Car Number</label>
                   <input
                     type="text"
                     className="form-control"
-                    onChange={(e) => {
-                      setCarNumber(e.target.value);
-                    }}
+                    value={carNumber}
+                    onChange={(e) => setCarNumber(e.target.value)}
                   />
                 </div>
               </div>
-
               <div className="col">
                 <div className="mb-3">
                   <label htmlFor="RTO">RTO Location</label>
                   <select
                     className="form-select"
-                    id="ownership"
+                    id="RTO"
                     value={RTOLocation}
                     onChange={(e) => setRTOLocation(e.target.value)}
                   >
@@ -274,169 +263,115 @@ export default function Sell() {
                   </select>
                 </div>
               </div>
-
-              {/* row-2 */}
             </div>
 
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label htmlFor="">KM Driven</label>
+                  <label htmlFor="kmDriven">Kilometers Driven</label>
                   <input
                     type="number"
                     className="form-control"
-                    onChange={(e) => {
-                      setKmDriven(e.target.value);
-                    }}
+                    value={kmDriven}
+                    onChange={(e) => setKmDriven(e.target.value)}
                   />
                 </div>
               </div>
-
               <div className="col">
                 <div className="mb-3">
                   <label htmlFor="ownership">Ownership</label>
-                  <select
-                    className="form-select"
-                    id="ownership"
-                    value={carOwnership}
-                    onChange={(e) => {
-                      setCarOwnership(e.target.value);
-                    }}
-                  >
-                    <option value="">Select Ownership</option>
-                    <option value="first owner">First Owner</option>
-                    <option value="second owner">Second Owner</option>
-                    <option value="third owner">Third Owner</option>
-                    <option value="fourth owner">Fourth Owner</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* row-2 */}
-            </div>
-
-            <div className="row">
-              <div className="col">
-                <div className="mb-3">
-                  <label htmlFor="">Manufacturing Year</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    onChange={(e) => {
-                      setManufacturingYear(e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="col">
-                <div className="mb-3">
-                  <label htmlFor="">Mileage</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    onChange={(e) => {
-                      setMileage(e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* row-3 */}
-            </div>
-
-            <div className="row">
-              <div className="col">
-                <div className="mb-3">
-                  <label htmlFor="">Color</label>
                   <input
                     type="text"
                     className="form-control"
-                    onChange={(e) => {
-                      setColor(e.target.value);
-                    }}
+                    value={carOwnership}
+                    onChange={(e) => setCarOwnership(e.target.value)}
                   />
                 </div>
               </div>
-
               <div className="col">
                 <div className="mb-3">
-                  <label htmlFor="">Selling Price</label>
+                  <label htmlFor="mileage">Mileage</label>
                   <input
                     type="number"
                     className="form-control"
+                    value={mileage}
+                    onChange={(e) => setMileage(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label htmlFor="manufacturingYear">Manufacturing Year</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={manufacturingYear}
+                    onChange={(e) => setManufacturingYear(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col">
+                <div className="mb-3">
+                  <label htmlFor="color">Color</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col">
+                <div className="mb-3">
+                  <label htmlFor="sellingPrice">Selling Price</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={sellingPrice}
+                    onChange={(e) => setSellingPrice(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label htmlFor="primaryImage">Primary Image</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                    onChange={(e) => setPrimaryImage(e.target.files[0])}
+                  />
+                </div>
+              </div>
+              <div className="col">
+                <div className="mb-3">
+                  <label htmlFor="additionalImages">Additional Images</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                    multiple
                     onChange={(e) => {
-                      setSellingPrice(e.target.value);
+                      const files = Array.from(e.target.files);
+                      const validFiles = files.filter(
+                        (file) => file.size < 5 * 1024 * 1024
+                      ); // Filter files less than 5 MB
+                      if (validFiles.length > 4) {
+                        alert("You can only upload up to 4 additional images.");
+                        return;
+                      }
+                      setAdditionalImages(validFiles);
                     }}
                   />
                 </div>
               </div>
-
-              {/* row-3 */}
             </div>
 
-            <div className="row mt-3 mb-3">
-              <div className="col">
-                <div
-                  style={{ fontWeight: "bold", fontSize: 20 }}
-                  className=" mb-1"
-                >
-                  Upload PrimaryImage
-                </div>
-
-                <input
-                  class="form-control"
-                  type="file"
-                  id="formFileMultiple"
-                  accept="image/*"
-                  onChange={(e) => setPrimaryImage(e.target.files[0])}
-                />
-              </div>
-              <div className="col">
-                <div
-                  style={{ fontWeight: "bold", fontSize: 20 }}
-                  className=" mb-1"
-                >
-                  Upload Images
-                </div>
-
-                <input
-                  class="form-control"
-                  type="file"
-                  id="formFileMultiple"
-                  accept="image/*"
-                  multiple
-                  onChange={(e) => {
-                    const files = Array.from(e.target.files);
-
-                    if (files.length > 4) {
-                      toast.warn(
-                        "Only 4 additional images."
-                      );
-                      e.target.value = ""; // Clear the input field
-                      return;
-                    }
-
-                    const validFiles = files.filter(
-                      (file) => file.size < 5 * 1024 * 1024
-                    ); // Filter files less than 5 MB
-
-
-                    if (validFiles.length !== files.length) {
-                      toast.warn(
-                        "Some files are too large. Only files less than 5 MB are allowed."
-                      );
-                    }
-
-                    setAdditionalImages(validFiles);
-                  }}
-                />
-              </div>
-            </div>
-
-            <div style={{ fontWeight: "bold", fontSize: 20 }} className="mb-1">
-              Currently available features ::{" "}
-            </div>
             {/* Feature checkBoxes */}
 
             <div className="row">
@@ -611,25 +546,19 @@ export default function Sell() {
             </div>
 
             {/* -------- */}
-
-            <center>
-              <div className="mb-4">
-                <button className="btn btn-success mt-3" onClick={onSell}>
-                  Sell
-                </button>
-                <button className="btn btn-danger ms-3 mt-3">Cancel</button>
-              </div>
-            </center>
-
-            {/* col-8 */}
+            <div className="text-center mt-4">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={onSell}
+              >
+                List Car
+              </button>
+            </div>
           </div>
-
-          {/* col-2 */}
           <div className="col-2"></div>
         </div>
       </div>
-
-      <br />
       <Footer />
     </div>
   );
