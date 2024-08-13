@@ -10,6 +10,7 @@ import FAQ from "../components/Faq"
 
 function Home()
 {
+    
     return(
         <div className="main-page">
             <Navbar/>

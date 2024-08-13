@@ -14,7 +14,7 @@ function MyCarList() {
         
         //TO DO - Get ID dynamically from somewhere else, for now using hardcoded id
 
-        const result = await myListedCarsApi(4);
+        const result = await myListedCarsApi(2);
         
         setCarData(result)
     };

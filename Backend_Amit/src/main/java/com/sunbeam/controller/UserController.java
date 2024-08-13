@@ -42,6 +42,7 @@ public class UserController {
 	  @PostMapping("/signup")
 	    public ResponseEntity<?> createUser(@RequestBody UserRegisterRequestDTO createUserDTO) {
 	     
+		  
 	       
 	        return ResponseEntity.status(HttpStatus.CREATED)
 	        .body(userService.createUser(createUserDTO));
@@ -71,7 +72,7 @@ public class UserController {
 				"Successful Auth!!!!");
 	    
 		return ResponseEntity.
-				status(HttpStatus.CREATED).body(resp);
+				status(HttpStatus.OK).body(resp);
 	}
 	
 	

@@ -39,7 +39,7 @@ public class CarRequestDTO {
 
 	private String carColor;
 
-    private Boolean carStatus;
+//    private Boolean carStatus;
 
 	private Long carSellingPrice;
 	
