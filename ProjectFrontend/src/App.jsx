@@ -9,6 +9,7 @@ import Register from "./pages/register";
 import { ToastContainer } from "react-toastify";
 import Cart from "./pages/cart";
 import MyCarList from "./pages/mylistedcars";
+import Edit from "./pages/edit";
 import MyOrders from "./pages/myorders";
 import CompareRender from "./pages/compareRender";
 import { LocationProvider } from "./data/LocationContext";
@@ -81,6 +82,14 @@ function App() {
             </LocationProvider>
           }
         />
+        <Route 
+          path="/edit" 
+          element={
+            <LocationProvider>
+              <Edit />
+            </LocationProvider>
+          } 
+          />
         <Route
           path="/compareRender"
           element={

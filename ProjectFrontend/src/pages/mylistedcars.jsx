@@ -3,9 +3,11 @@ import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { myListedCarsApi } from "../services/car";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function MyCarList() {
 
+    const navigate = useNavigate();
     const [carData, setCarData] = useState([]);
 
     const load = async () => {
@@ -20,6 +22,11 @@ function MyCarList() {
     useEffect(() => {
         load()
     }, []);
+
+    function onEdit()
+    {
+        navigate('/edit')
+    }
 
     return <div>
 
@@ -60,7 +67,7 @@ function MyCarList() {
 
                                                     //BUTTON APIS REMAINING
 
-                                                    // onClick={}
+                                                    onClick={onEdit}
                                                     >
                                                     <i class="fa-regular fa-pen-to-square"></i>
                                                 </button>
