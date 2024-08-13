@@ -12,7 +12,7 @@ function MyCarList() {
 
     const load = async () => {
         
-        //TO DO - Get ID dynamically from somewhere else, for now using static id
+        //TO DO - Get ID dynamically from somewhere else, for now using hardcoded id
 
         const result = await myListedCarsApi(4);
         

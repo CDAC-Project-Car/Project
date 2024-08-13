@@ -90,3 +90,10 @@ export async function myListedCarsApi(id) {
 
   return response.data;
 }
+
+export async function getMyOrders(id) {
+
+  const response = await axios.get(`http://localhost:8080/transaction/myOrders/${id}`);
+
+  return response.data;
+}

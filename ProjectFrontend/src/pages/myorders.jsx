@@ -1,70 +1,79 @@
-import Navbar from "../components/Navbar"
-import Footer from "../components/Footer"
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { useEffect, useState } from "react";
+import { getMyOrders } from "../services/car";
+
+function MyOrders() {
+
+    const [carData, setCarData] = useState([]);
+
+    const load = async () => {
+
+        //TO DO - Get ID dynamically from somewhere else, for now using hardcoded id
+
+        const result = await getMyOrders(2);
+        setCarData(result)
+
+    };
+
+    useEffect(() => {
+        load()
+    }, []);
 
 
-export default function MyOrders()
-{
-    return(
-    <div>
-    <Navbar />
-    <div className="container">
-    <h3 style={{fontWeight: 'bold'}}><center>Orders</center></h3>
-        <div className="row mt-5">
-        <div className="col-2"></div>
-        <div className="col-8"  >
+    return <div>
 
-           <center>
-           <table className="table table-striped mb-5">
-                <thead>
-                    <th>Sr No.</th>
-                    <th>Car Name</th>
-                    <th>Model</th>
-                    <th>Price</th>
-                    <th>Transaction Date</th>
-                   
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Brezza</td>
-                        <td>VXI</td>
-                        <td>1029000</td>
-                        <td>29/02/2016</td>
-                        
-                    </tr>
+        <Navbar />
+        <div className="container">
+            <h3 className="text-center mb-4 mt-4" style={{ fontWeight: 'bold' }}>My Orders</h3>
 
-                    <tr>
-                        <td>2</td>
-                        <td>Harrier</td>
-                        <td>XM</td>
-                        <td>2029000</td>
-                        <td>29/02/2020</td>
-                         
-                    </tr>
+            <div className="row mt-5">
+                <div className="col-1"></div>
 
-                    <tr>
-                        <td>3</td>
-                        <td>Thar</td>
-                        <td>XM</td>
-                        <td>2029000</td>
-                        <td>29/02/2020</td>
-                        
-                    </tr>
+                <div className="col-10">
+                    <center>
+                        <table className="table table-striped table-bordered md-5">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th>Transaction id</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Company</th>
+                                    <th>Model</th>
+                                    <th>Variant</th>
+                                    <th>Car number</th>
 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    carData.map((car, index) => (
+                                        <tr key={index}>
+                                            <td>{car.transactionId}</td>
+                                            <td>{new Date(car.transactionDate).toLocaleDateString()}</td>
+                                            <td>{car.transactionType}</td>
+                                            <td>{car.transactionAmount}</td>
+                                            <td>{car.carModelCompany}</td>
+                                            <td>{car.modelName}</td>
+                                            <td>{car.carSeriesName}</td>
+                                            <td>{car.carNumber}</td>
+                                        </tr>
+                                    ))
+                                }
 
+                            </tbody>
+                        </table>
+                    </center>
+                </div>
 
-                </tbody>
-            </table>
-           </center>
+                <div className="col-1"></div>
+            </div>
 
         </div>
-        <div className="col-2"></div>
-        </div>
-       
+        <Footer />
 
     </div>
-    <Footer />
-
-</div>
-    )
 }
+
+export default MyOrders;
