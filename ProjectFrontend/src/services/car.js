@@ -73,3 +73,20 @@ export async function saveCar(formData) {
 
   
 }
+
+
+export async function myListedCarsApi(id) {
+
+  // const token = sessionStorage.getItem('token');
+
+  const response = await axios.get(`http://localhost:8080/cars/sellerListedCars/${id}`
+    
+      // ,
+    // {
+    //   headers : {token}
+    // }
+
+  );
+
+  return response.data;
+}

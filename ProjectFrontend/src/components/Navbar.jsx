@@ -1,10 +1,27 @@
 
 
+import { useContext, useState } from 'react';
 import car from '../Assets/carLogo1.png';
 import { Link } from 'react-router-dom';
+import { LocationContext } from '../data/LocationContext';
 
 function Navbar() {
+
+    const { location, setLocation } = useContext(LocationContext);
+    const [showModal, setShowModal] = useState(false);
+
+    const cities = [
+        "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata",
+        "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Lucknow",
+        "Kanpur", "Nagpur", "Indore", "Bhopal", "Coimbatore",
+    ];
+
+    const onLocationChange = (city) => {
+        setLocation(city);
+        setShowModal(false);  
+    };
     return (
+        <>
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark sticky-top'>
             <div className='container-fluid'>
                 <Link className='navbar-brand' to='/home'>
@@ -36,39 +53,44 @@ function Navbar() {
                                 <li><Link to='/buy' className='dropdown-item'>Used cars in Pune</Link></li>
                             </ul>
                         </li>
-                        <li className='nav-item dropdown me-3'>
-                            <a className='nav-link dropdown-toggle' href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                                Sell Car
-                            </a>
-                            <ul className='dropdown-menu'>
-                                <li><Link to='/sell' className='dropdown-item'>Sell car in Nagpur</Link></li>
-                                <li><Link to='/sell' className='dropdown-item'>Sell car in Delhi</Link></li>
-                                <li><Link to='/sell' className='dropdown-item'>Sell car in Pune</Link></li>
-                            </ul>
-                        </li>
                         <li className='nav-item'>
-                            <Link to='/home' className='nav-link me-3'>
-                                <i className="fa-solid fa-location-dot"></i> Delhi
-                            </Link>
+                            <Link to='/sell' className='nav-link me-3'>Sell Car</Link>
                         </li>
+                        
+                        <li className='nav-item'>
+                                <button className='nav-link me-3 btn btn-link' onClick={() => setShowModal(true)}>
+                                    <i className="fa-solid fa-location-dot"></i> {location}
+                                </button>
+                            </li>
                         <li className='nav-item'>
                             <Link to='/compare' className='nav-link me-3'>Compare cars</Link>
                         </li>
                         <li className='nav-item'>
                             <Link to='/cart' className='nav-link me-3'>
-                                <i className="fa-solid fa-cart-shopping me-1"></i> Cart
+                            <i class="fa-regular fa-heart"></i> WishList
                             </Link>
                         </li>
-                        <li className='nav-item'>
-                            <form className="d-flex" role='search'>
-                                <input className="form-control form-control-sm" type='search' placeholder='Search' aria-label='Search' />
-                                <button className="btn btn-warning" type='submit'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                </button>
-                            </form>
+                        
+                        {/* <li className='nav-item dropdown me-3'>
+                            <Link to='/home' className='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                <i className="fa-regular fa-user me-2"></i> Account
+                            </Link>
+                            <ul className='dropdown-menu'>
+                                <li><Link to='/login' className='dropdown-item'><button className="btn btn-success">Login/SignUp</button></Link></li>
+                                <li><Link to='/myorders' className='dropdown-item'>My Orders</Link></li>
+                                <li><Link to='/mylistedcars' className='dropdown-item'>My Listed Cars</Link></li>
+                            </ul>
                         </li>
+                        <li className='nav-item'>
+                            <Link to='/login' className='nav-link me-3'>
+                                <button type="button" className="btn btn-danger btn-sm" style={{ padding: '2px 6px', fontSize: '0.75rem', lineHeight: '1', height: 'auto' }}>
+                                    <i className="fa-solid fa-arrow-right-from-bracket"></i>
+                                </button>
+                            </Link>
+                        </li> */}
+
+                         {/* Rightmost items */}
+                    <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>
                         <li className='nav-item dropdown me-3'>
                             <Link to='/home' className='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                 <i className="fa-regular fa-user me-2"></i> Account
@@ -87,9 +109,39 @@ function Navbar() {
                             </Link>
                         </li>
                     </ul>
+
+
+
+
+                    </ul>
                 </div>
             </div>
         </nav>
+
+         {/* Modal for city selection */}
+
+         {showModal && (
+            <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Select Your City</h5>
+                            <button type="button" className="btn-close" aria-label="Close" onClick={() => setShowModal(false)}></button>
+                        </div>
+                        <div className="modal-body">
+                            <ul className="list-group">
+                                {cities.map(city => (
+                                    <li key={city} className="list-group-item list-group-item-action" onClick={() => onLocationChange(city)}>
+                                        {city}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )}
+      </>
     );
 }
 

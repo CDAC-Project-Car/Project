@@ -117,8 +117,7 @@ export default function Compare() {
 
   const onCompare = () => {
 
-    // console.log("m1 :: "+selectedVariantCar1)
-    // console.log("m2 :: "+selectedVariantCar2)
+    
 
     const dataToSend= {
       m1:selectedVariantCar1,
