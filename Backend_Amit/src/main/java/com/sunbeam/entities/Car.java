@@ -19,6 +19,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,7 +73,7 @@ public class Car{
 	private String carColor;
 	
 	@NotNull(message = "Field cannot be blank")
-    private Boolean carStatus = true;
+    private Boolean carStatus = false;
 	
 	@NotNull(message = "Field cannot be blank")
 	@Column(nullable = false)
@@ -81,6 +84,7 @@ public class Car{
 	private Long carSellingPrice;
 
 	//@NotNull(message="Listing Date cannot be blank")
+	@CreationTimestamp
 	private LocalDate carListingDate;
 	
 	@ManyToOne

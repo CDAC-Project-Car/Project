@@ -115,7 +115,7 @@ export default function Sell() {
 
     // Creating the CarRequestDTO
     const carRequestDTO = {
-      userId: 2, // to do hard coded
+      userId: 1, // to do hard coded
       modelId: selectedVariant,
       carNumber: carNumber,
       isInsurance: isInsured,

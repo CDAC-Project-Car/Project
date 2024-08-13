@@ -21,22 +21,44 @@ function Login() {
       toast.warn('Enter password')
     else {
 
-      const result = await LoginService(email, password);
-      console.log(result.status)
+      // const result = await LoginService(email, password);
+      // console.log(result.status)
 
-      if (result.status == 200) {
-        const { role, name } = result['data']
+      // if (result.status == 200) {
+      //   const { role, name } = result['data']
 
-        if (role == 'ADMIN')
-          navigate('/admin')
-        else {
-          toast.success('welcome ' + name)
+      //   if (role == 'ADMIN')
+      //     navigate('/admin')
+      //   else {
+      //     toast.success('welcome ' + name)
 
-          navigate('/home')
+      //     navigate('/home')
+      //   }
+      // }
+      // else
+      //   toast.error('invalid user')
+
+      try {
+        const result = await LoginService(email, password);
+
+        if (result.status === 200) {
+            const { role, name } = result.data;
+
+            if (role === 'ADMIN') {
+                navigate('/admin');
+            } else {
+                toast.success('Welcome ' + name);
+                navigate('/home');
+            }
+        } else {
+            toast.error('Invalid user');
         }
-      }
-      else
-        toast.error('invalid user')
+    } catch (error) {
+      // optional chaining
+      const errorMessage = error.response?.data?.message ;
+    toast.error(errorMessage);
+    }
+
 
     }
     

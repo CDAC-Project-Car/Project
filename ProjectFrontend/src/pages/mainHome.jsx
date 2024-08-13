@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { LocationContext } from "../data/LocationContext";
+import { toast } from "react-toastify";
 
 function MainHome() {
   const { location } = useContext(LocationContext);
@@ -58,7 +59,7 @@ function MainHome() {
       <Navbar />
       <div className="container mt-4">
         <div className="row">
-          <div className="col-md-4 col-lg-3 mb-4">
+          <div className="col-md-4 col-lg-3 mb-4 sticky-top">
             <div
               className="p-4"
               style={{
