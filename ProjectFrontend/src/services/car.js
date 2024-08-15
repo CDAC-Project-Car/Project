@@ -109,6 +109,34 @@ export async function deleteCar(id) {
   }
 }
 
+export async function sendMail(selectedBrand, selectedModel,sellingPrice)
+{
+
+  try {
+    const userName = sessionStorage.getItem('userName')
+    const userEmail = sessionStorage.getItem('email')
+    const body = {
+      "recipient": `${userEmail}`,
+      "msgBody": `Dear ${userName},\n\nCongratulations! Your listing for the ${selectedBrand}  ${selectedModel} at ${sellingPrice} Rs has been successfully published on CarBazaar.\n\nBest regards,\nThe CarBazaar Team`,
+      "subject": "Your Car Listing is Live!"
+    }
+
+    const response = await axios.post(
+      `http://localhost:8080/sendMail`,body)
+      
+      return response.data;
+      }
+   catch (error) {
+    toast.error(error);
+  }
+
+}
+
+
+
+
+
+
 // export async function deleteCarFromCart(userId,carId) {
 
 //   const response = await axios.get(`http://localhost:8080/cart/${userId}/remove/${carId}`);

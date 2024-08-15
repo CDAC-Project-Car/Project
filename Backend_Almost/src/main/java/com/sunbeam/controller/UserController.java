@@ -75,7 +75,7 @@ public class UserController {
 //		sending token along with user info
 	 UserSignInResponseDTO resp=new UserSignInResponseDTO
 				(jwtUtils.generateJwtToken(verifiedToken),
-				"Successful Auth!!!!",user.getUserId(),user.getUserName(),user.getRole());
+				"Successful Auth!!!!",user.getUserId(),user.getUserName(),user.getEmail(),user.getRole());
 	    
 		return ResponseEntity.
 				status(HttpStatus.OK).body(resp);
