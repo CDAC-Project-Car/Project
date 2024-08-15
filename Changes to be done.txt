@@ -1,7 +1,6 @@
 in mylistedcars.jsx , 
 --> sending hardcoded userID to axios api myListedCarsApi
---> Write @CrossOrigin on CarController
+
 
 in myorder.jsx  ,
 --> sending hardcoded userID to axios api getMyOrders
---> Write @CrossOrigin on TransactionController
