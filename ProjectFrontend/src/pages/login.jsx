@@ -21,33 +21,19 @@ function Login() {
       toast.warn('Enter password')
     else {
 
-      // const result = await LoginService(email, password);
-      // console.log(result.status)
-
-      // if (result.status == 200) {
-      //   const { role, name } = result['data']
-
-      //   if (role == 'ADMIN')
-      //     navigate('/admin')
-      //   else {
-      //     toast.success('welcome ' + name)
-
-      //     navigate('/home')
-      //   }
-      // }
-      // else
-      //   toast.error('invalid user')
+       
 
       try {
         const result = await LoginService(email, password);
 
         if (result.status === 200) {
-            const { role, userName, jwt, userId} = result.data;
+            const { role, userName, jwt, userId,email} = result.data;
 
             sessionStorage.userName=userName;
             sessionStorage.token=jwt;
             sessionStorage.userId=userId;
             sessionStorage.isLoggedIn=true;
+            sessionStorage.email=email;
 
 
             if (role === 'ADMIN') {

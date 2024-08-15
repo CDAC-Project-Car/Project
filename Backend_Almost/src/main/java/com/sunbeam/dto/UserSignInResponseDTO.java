@@ -21,7 +21,7 @@ public class UserSignInResponseDTO {
 	private Long userId;
 	private String userName;
 
-//	private String email;
+	private String email;
 	
 	
 	private Role role ;

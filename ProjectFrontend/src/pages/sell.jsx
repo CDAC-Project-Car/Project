@@ -8,6 +8,7 @@ import FeatureCheckbox from "../components/FeatureCheckBox";
 import { toast } from "react-toastify";
 import { saveCar } from "../services/car";
 import { useNavigate } from "react-router-dom";
+import { sendMail } from "../services/car";
 
 export default function Sell() {
 
@@ -71,6 +72,8 @@ export default function Sell() {
   ];
 
   const id = sessionStorage.getItem('userId')
+  
+
 
   // for getting brand data (one time)
   useEffect(() => {
@@ -165,6 +168,9 @@ export default function Sell() {
 
     const result = await saveCar(formData);
     toast.success(result.message);
+
+    const resultMail = await sendMail(selectedBrand, selectedModel,sellingPrice);
+    console.log(resultMail);
     navigate('/home')
     
 
