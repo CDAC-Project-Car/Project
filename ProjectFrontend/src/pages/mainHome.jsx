@@ -59,7 +59,7 @@ function MainHome() {
       <Navbar />
       <div className="container mt-4">
         <div className="row">
-          <div className="col-md-4 col-lg-3 mb-4 sticky-top">
+          <div className="col-md-4 col-lg-3 mb-4 ">
             <div
               className="p-4"
               style={{
