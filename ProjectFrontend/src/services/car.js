@@ -6,12 +6,11 @@ export async function getBrandFData() {
 
   const data = response.data;
 
-
   // changing data into desired format for component reusability
   const result = data.map((value) => {
     return {
       carModelId: -1,
-      carSeriesName: value
+      carSeriesName: value,
     };
   });
 
@@ -19,7 +18,6 @@ export async function getBrandFData() {
 }
 
 export async function getModelData(company) {
-     
   const response = await axios.get(
     `http://localhost:8080/carModel/model/${company}`
   );
@@ -29,7 +27,7 @@ export async function getModelData(company) {
   const result = data.map((value) => {
     return {
       carModelId: -1,
-      carSeriesName: value
+      carSeriesName: value,
     };
   });
 
@@ -37,7 +35,6 @@ export async function getModelData(company) {
 }
 
 export async function getVariantData(model) {
-    
   const response = await axios.get(
     `http://localhost:8080/carModel/variant/${model}`
   );
@@ -45,66 +42,71 @@ export async function getVariantData(model) {
   return response.data;
 }
 
-export async function getCompareCarData({m1, m2}) {
-
-  const response = await axios.get(`http://localhost:8080/carModel/compare/${m1}/${m2}`)
-
-  
+export async function getCompareCarData({ m1, m2 }) {
+  const response = await axios.get(
+    `http://localhost:8080/carModel/compare/${m1}/${m2}`
+  );
 
   return response.data;
-
-  
 }
 
 export async function saveCar(formData) {
-
   try {
-    const response = await axios.post("http://localhost:8080/cars/sell", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      } }  );
+    const response = await axios.post(
+      "http://localhost:8080/cars/sell",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
-    toast.error(error)
+    toast.error(error);
   }
-
-  
-
-
-  
 }
 
-
 export async function myListedCarsApi(id) {
-
   // const token = sessionStorage.getItem('token');
 
-  const response = await axios.get(`http://localhost:8080/cars/sellerListedCars/${id}`
-    
-      // ,
+  const response = await axios.get(
+    `http://localhost:8080/cars/sellerListedCars/${id}`
+
+    // ,
     // {
     //   headers : {token}
     // }
-
   );
 
   return response.data;
 }
 
 export async function getMyOrders(id) {
-
-  const response = await axios.get(`http://localhost:8080/transaction/myOrders/${id}`);
+  const response = await axios.get(
+    `http://localhost:8080/transaction/myOrders/${id}`
+  );
 
   return response.data;
 }
 
-
-
 export async function getMyWishlist(id) {
-
   const response = await axios.get(`http://localhost:8080/cart/${id}`);
 
   return response.data;
+}
+
+export async function deleteCar(id) {
+
+  try {
+    const response = await axios.delete(
+      `http://localhost:8080/cars/deleteCar/${id}`)
+      
+      return response.data;
+      }
+   catch (error) {
+    toast.error(error);
+  }
 }
 
 // export async function deleteCarFromCart(userId,carId) {

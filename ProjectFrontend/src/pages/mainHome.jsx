@@ -4,6 +4,10 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { LocationContext } from "../data/LocationContext";
 import { toast } from "react-toastify";
+import Footer from "../components/Footer";
+import CardsGroups from "../components/CardsGroups/CardsGroups";
+import { CARDDATA } from "../data/WhyCarBazarData";
+import FAQ from "../components/Faq";
 
 function MainHome() {
   const { location } = useContext(LocationContext);
@@ -150,7 +154,7 @@ function MainHome() {
               className="mt-3 mb-2"
               style={{ fontSize: "1.5rem", fontWeight: "bold" }}
             >
-               {cars.length} available
+              {cars.length} available
             </h6>
             <div className="row">
               {cars.map((car) => (
@@ -196,7 +200,7 @@ function MainHome() {
                       >
                         {car.carModelCompany} {car.modelName}
                       </h5>
-                      
+
                       <p className="card-text" style={{ fontSize: "0.8rem" }}>
                         Transmission: {car.transmission}
                       </p>
@@ -223,6 +227,11 @@ function MainHome() {
           </div>
         </div>
       </div>
+
+      <CardsGroups title="Why use CarBazaar ?" data={CARDDATA} />
+      <FAQ />
+
+      <Footer />
     </div>
   );
 }

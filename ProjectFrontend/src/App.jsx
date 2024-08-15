@@ -26,6 +26,8 @@ function App() {
               <Home />
             </LocationProvider> */
     <div>
+      
+      
       <Routes>
         {/* Routes that need LocationProvider */}
         <Route
@@ -36,14 +38,7 @@ function App() {
             </LocationProvider>
           }
         />
-        <Route
-          path="/main"
-          element={
-            <LocationProvider>
-              <MainHome />
-            </LocationProvider>
-          }
-        />
+        
         <Route
          path="/buy/:carId"
           element={
@@ -115,6 +110,9 @@ function App() {
             </LocationProvider>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+       
+
+
       </Routes>
       <ToastContainer />
     </div>

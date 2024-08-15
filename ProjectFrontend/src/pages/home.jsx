@@ -1,7 +1,7 @@
 
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import React from 'react'
+import React, { useEffect } from 'react'
 import CarsGroups from '../components/CarsGroups/CarsGroups'
 import {DATA, DATA1, DATA2} from '../data/Data'
 import CardsGroups from "../components/CardsGroups/CardsGroups"
@@ -10,6 +10,9 @@ import FAQ from "../components/Faq"
 
 function Home()
 {
+
+   
+    
     
     return(
         <div className="main-page">

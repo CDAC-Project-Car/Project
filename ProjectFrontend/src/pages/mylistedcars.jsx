@@ -2,19 +2,20 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { myListedCarsApi } from "../services/car";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { deleteCar } from "../services/car";
+import { toast } from "react-toastify";
 
 function MyCarList() {
 
     const navigate = useNavigate();
     const [carData, setCarData] = useState([]);
+    const id = sessionStorage.getItem('userId')
 
     const load = async () => {
         
-        //TO DO - Get ID dynamically from somewhere else, for now using hardcoded id
 
-        const result = await myListedCarsApi(2);
+        const result = await myListedCarsApi(id);
         
         setCarData(result)
     };
@@ -26,6 +27,14 @@ function MyCarList() {
     function onEdit()
     {
         navigate('/edit')
+    }
+
+    const onDelete = async (e)=>
+    {
+        const id = e.target.value;
+        const result = await deleteCar(id);
+        toast.success(result)
+
     }
 
     return <div>
@@ -71,7 +80,7 @@ function MyCarList() {
                                                     >
                                                     <i class="fa-regular fa-pen-to-square"></i>
                                                 </button>
-                                                <button className="btn btn-outline-danger">
+                                                <button className="btn btn-outline-danger" value={car.carId} onClick={(e)=>{onDelete(e)}}>
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
 

@@ -7,13 +7,11 @@ import { toast } from "react-toastify";
 function WishList() {
 
     const [carData, setCarData] = useState([]);
-    // const [resultMsg, setResultMsg] = useState('');
-
+    const id= sessionStorage.getItem('userId')
     const load = async () => {
 
-        //TO DO - Get ID dynamically from somewhere else, for now using hardcoded id
 
-        const result = await getMyWishlist(1);
+        const result = await getMyWishlist(id);
         setCarData(result)
 
 

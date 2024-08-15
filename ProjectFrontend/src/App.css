@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+/* 
+
+.dropdown-item .btn {
+  width: 100%; 
+  text-align: center; 
+  padding: 0.5rem 1rem; 
+  box-sizing: border-box; 
+}
+
+.dropdown-item {
+  display: flex;
+  justify-content: center; 
+  padding: 0; 
+}
+
+.dropdown-item .btn {
+  margin: 0;
+  border: none;
+} */
+
+
+
+/* .dropdown-item {
+  padding: 0;
+}
+
+.dropdown-item .btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  border: none;
+} */

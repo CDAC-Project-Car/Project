@@ -42,12 +42,18 @@ function Login() {
         const result = await LoginService(email, password);
 
         if (result.status === 200) {
-            const { role, name } = result.data;
+            const { role, userName, jwt, userId} = result.data;
+
+            sessionStorage.userName=userName;
+            sessionStorage.token=jwt;
+            sessionStorage.userId=userId;
+            sessionStorage.isLoggedIn=true;
+
 
             if (role === 'ADMIN') {
                 navigate('/admin');
             } else {
-                toast.success('Welcome ' + name);
+                toast.success('Welcome ' + userName);
                 navigate('/home');
             }
         } else {

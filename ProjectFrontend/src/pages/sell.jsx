@@ -70,6 +70,8 @@ export default function Sell() {
     "Coimbatore",
   ];
 
+  const id = sessionStorage.getItem('userId')
+
   // for getting brand data (one time)
   useEffect(() => {
     const fetchBrand = async () => {
@@ -115,7 +117,7 @@ export default function Sell() {
 
     // Creating the CarRequestDTO
     const carRequestDTO = {
-      userId: 1, // to do hard coded
+      userId: id,
       modelId: selectedVariant,
       carNumber: carNumber,
       isInsurance: isInsured,

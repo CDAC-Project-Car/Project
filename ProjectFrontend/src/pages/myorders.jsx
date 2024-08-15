@@ -6,19 +6,19 @@ import { getMyOrders } from "../services/car";
 function MyOrders() {
 
     const [carData, setCarData] = useState([]);
+    const id = sessionStorage.getItem('userId')
 
     const load = async () => {
 
-        //TO DO - Get ID dynamically from somewhere else, for now using hardcoded id
 
-        const result = await getMyOrders(2);
+        const result = await getMyOrders(id);
         setCarData(result)
 
     };
 
     useEffect(() => {
         load()
-    }, []);
+    }, [carData]);
 
 
     return <div>
@@ -34,7 +34,7 @@ function MyOrders() {
                     <center>
                         <table className="table table-striped table-bordered md-5">
                             <thead className="thead-dark">
-                                <tr>
+                               {carData.length ? <tr>
                                     <th>Transaction id</th>
                                     <th>Date</th>
                                     <th>Type</th>
@@ -44,7 +44,7 @@ function MyOrders() {
                                     <th>Variant</th>
                                     <th>Car number</th>
 
-                                </tr>
+                                </tr> : <h3>No orders </h3>}
                             </thead>
                             <tbody>
                                 {
