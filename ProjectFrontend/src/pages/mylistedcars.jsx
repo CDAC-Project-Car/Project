@@ -10,6 +10,7 @@ function MyCarList() {
 
     const navigate = useNavigate();
     const [carData, setCarData] = useState([]);
+    const [change, setChange] = useState(null);
     const id = sessionStorage.getItem('userId')
 
     const load = async () => {
@@ -31,11 +32,17 @@ function MyCarList() {
 
     const onDelete = async (e)=>
     {
+        let num = 1;
         const id = e.target.value;
         const result = await deleteCar(id);
-        toast.success(result)
-
+        toast.success('Car deleted successfully')
+        const change = num + 1;
+        setChange(change)
     }
+
+    useEffect(()=>{
+        load()
+    }, [change]);
 
     return <div>
 

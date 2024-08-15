@@ -18,7 +18,7 @@ function MyOrders() {
 
     useEffect(() => {
         load()
-    }, [carData]);
+    }, []);
 
 
     return <div>
